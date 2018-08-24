@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.support.design.widget.Snackbar
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
@@ -63,7 +64,8 @@ class MainActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.editText)
         editText.requestFocus()
 
-        val sendButton = findViewById<Button>(R.id.sendButton)
+        sendButton.setTextColor(resources.getColor(R.color.colorBackground))
+        sendButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
         sendButton.setOnClickListener { view ->
             val editText = findViewById<EditText>(R.id.editText)
             val text = editText.text.toString()
