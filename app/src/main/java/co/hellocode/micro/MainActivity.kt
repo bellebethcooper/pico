@@ -1,13 +1,23 @@
 package co.hellocode.micro
 
+import android.app.Activity
+import android.app.PendingIntent.getActivity
+import android.content.Context
+import android.content.DialogInterface
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.DialogFragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -15,15 +25,42 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
 import com.android.volley.AuthFailureError
+import kotlinx.android.synthetic.main.dialog_token.*
 import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
 
+    val PREFS_FILENAME = "co.hellocode.micro.prefs"
+    val TOKEN = "token"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        val prefs = this.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+        val token: String? = prefs?.getString(TOKEN, null)
+        if (token == null) {
+            Log.i("MainActivity", "token is null")
+            val input = EditText(this)
+            val builder = AlertDialog.Builder(this)
+//            val fragment = DialogFragment()
+            val dialog = builder.setView(input)
+                    .setTitle("Set your app token")
+                    .setNegativeButton("Cancel", { dialogInterface, i ->
+                        dialogInterface.cancel()
+                    })
+                    .setPositiveButton("Save", { dialogInterface, i ->
+                        Log.i("MainActivity", "token entered: ${input.text.toString()}")
+                        // Do something with value!
+                        prefs.edit().putString(TOKEN, input.text.toString().toLowerCase()).apply()
+                        Toast.makeText(this, "Token set, thanks.", Toast.LENGTH_SHORT).show()
+                    })
+                    .create()
+                    .show()
+        }
+
         val editText = findViewById<EditText>(R.id.editText)
         editText.requestFocus()
 
@@ -50,7 +87,9 @@ class MainActivity : AppCompatActivity() {
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
                     val headers = HashMap<String, String>()
-                    headers["Authorization"] = "Bearer 6EF027615E31BBD96E44"
+                    val prefs = this@MainActivity.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+                    val token: String? = prefs?.getString(TOKEN, null)
+                    headers["Authorization"] = "Bearer $token"
                     return headers
                 }
 
