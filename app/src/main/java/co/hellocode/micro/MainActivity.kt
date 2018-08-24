@@ -25,7 +25,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
 import com.android.volley.AuthFailureError
-import kotlinx.android.synthetic.main.dialog_token.*
 import org.json.JSONObject
 
 
@@ -77,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                     Response.Listener<String> { response ->
                         Log.i("MainActivity", "resp: $response")
                         Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
+                        editText.setText("")
                     },
                     Response.ErrorListener { error ->
                         Log.i("MainActivity", "err: $error msg: ${error.message}")
