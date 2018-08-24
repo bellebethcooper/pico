@@ -17,9 +17,9 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 - [x] Take and store user app token
 - [x] Send posts to hosted Micro.blog accounts
 - [ ] Support for blogs not hosted by Micro.blog
-- [ ] Clear text box after posting
-- [ ] Character count
-- [ ] Choose custom colours
+- [x] Clear text box after posting
+- [x] Character count
+- [x] Choose custom colours
 - [ ] Improve design
 - [ ] Check user's token before saving and showing success message
 - [ ] Support for posting images
