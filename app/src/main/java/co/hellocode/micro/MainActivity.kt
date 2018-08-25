@@ -40,8 +40,6 @@ const private val PICK_IMAGE = 1
 
 class MainActivity : AppCompatActivity() {
 
-    val PREFS_FILENAME = "co.hellocode.micro.prefs"
-    val TOKEN = "token"
     var progress: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,8 +81,6 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(chooserIntent, PICK_IMAGE)
         }
 
-        sendButton.setTextColor(resources.getColor(R.color.colorBackground))
-        sendButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
         sendButton.setOnClickListener { view ->
             submitPost(view)
         }

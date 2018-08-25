@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <!--<item name="colorButtonNormal">@color/colorAccent</item>-->
+        <!--<item name="colorControlHighlight">@color/colorPrimary</item>-->
 
     </style>
 
@@ -19,8 +19,8 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
-    <item name="colorPrimary">#FFFFFF</item>
-    <item name="colorPrimaryDark">#DDDDDD</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryDark">#DDDDDD</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -29,5 +29,6 @@
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 
 </resources>
