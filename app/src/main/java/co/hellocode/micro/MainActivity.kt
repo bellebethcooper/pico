@@ -179,6 +179,7 @@ class MainActivity : AppCompatActivity() {
                             val imgURL = obj["url"] as String
                             editText.setText("\n\n![]($imgURL)")
                             this.progress?.hide()
+                            Snackbar.make(editText.rootView, "Attached image to your post.", Snackbar.LENGTH_SHORT).show()
                             editText.requestFocus()
                         }
                     }
