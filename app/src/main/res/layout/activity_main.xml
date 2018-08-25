@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorBackground">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -32,24 +33,45 @@
             android:id="@+id/textContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="280">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
+                android:layout_height="80dp"
                 android:inputType="textCapSentences"
                 android:minLines="5" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/sendButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingHorizontal="16dp"
-            android:text="Send" />
+            android:paddingTop="24dp">
+
+            <ImageButton
+                android:id="@+id/photoButton"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="Photo picker button"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo"
+                android:tint="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:text="Send" />
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
