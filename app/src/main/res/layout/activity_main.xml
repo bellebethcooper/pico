@@ -54,7 +54,7 @@
 
             <ImageButton
                 android:id="@+id/photoButton"
-                android:layout_width="40dp"
+                android:layout_width="24dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="?android:selectableItemBackground"

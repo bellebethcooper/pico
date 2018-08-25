@@ -153,9 +153,16 @@ class MainActivity : AppCompatActivity() {
                headers,
                 Response.Listener {
                     if (it != null) {
-                        Log.i("MainActivity", "Success! Resp: ${String(it.data)}")
+                        val data = String(it.data)
+                        Log.i("MainActivity", "Success! Resp: $data")
+                        val obj = JSONObject(data)
+                        if (obj["url"] != null) {
+                            val imgURL = obj["url"] as String
+                            editText.setText("\n\n![]($imgURL)")
+                            editText.requestFocus()
+                        }
                     }
-                }
+                },
                 Response.ErrorListener {
                     if (it.networkResponse != null) {
                         Log.i("MainActivity", "Error: ${String(it.networkResponse.data)}")
