@@ -1,4 +1,4 @@
-# Micro: A tiny Micro.blog write-only client for Android
+# Pico: A tiny Micro.blog write-only client for Android
 
 This project is extremely early! I threw it together just so I'd have a way to post to Micro.blog from my Android phone.
 
@@ -22,4 +22,4 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 - [x] Choose custom colours
 - [ ] Improve design
 - [ ] Check user's token before saving and showing success message
-- [ ] Support for posting images
+- [x] Support for posting images
