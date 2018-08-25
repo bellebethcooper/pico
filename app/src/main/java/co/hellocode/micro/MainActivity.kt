@@ -2,6 +2,7 @@ package co.hellocode.micro
 
 import android.app.Activity
 import android.app.PendingIntent.getActivity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,6 +22,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -34,12 +36,13 @@ import uk.me.hardill.volley.multipart.MultipartRequest
 import java.io.ByteArrayOutputStream
 import javax.security.auth.login.LoginException
 
-    const private val PICK_IMAGE = 1
+const private val PICK_IMAGE = 1
 
 class MainActivity : AppCompatActivity() {
 
     val PREFS_FILENAME = "co.hellocode.micro.prefs"
     val TOKEN = "token"
+    var progress: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,44 +86,53 @@ class MainActivity : AppCompatActivity() {
         sendButton.setTextColor(resources.getColor(R.color.colorBackground))
         sendButton.setBackgroundColor(resources.getColor(R.color.colorPrimary))
         sendButton.setOnClickListener { view ->
-            val text = editText.text.toString()
-            val queue = Volley.newRequestQueue(this)
-            val url = "https://micro.blog/micropub"
-
-            val rq = object : StringRequest(
-                    Request.Method.POST,
-                    url,
-                    Response.Listener<String> { response ->
-                        Log.i("MainActivity", "resp: $response")
-                        Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
-                        editText.setText("")
-                    },
-                    Response.ErrorListener { error ->
-                        Log.i("MainActivity", "err: $error msg: ${error.message}")
-                        Snackbar.make(view, "Error: $error", Snackbar.LENGTH_LONG).show()
-                        // TODO: Handle error
-                    })
-            {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    val prefs = this@MainActivity.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
-                    val token: String? = prefs?.getString(TOKEN, null)
-                    headers["Authorization"] = "Bearer $token"
-                    return headers
-                }
-
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["h"] = "entry"
-                    params["content"] = text
-                    return params
-                }
-            }
-            queue.add(rq)
+            submitPost(view)
         }
     }
+
+    private fun submitPost(view: View) {
+        this.progress = spinner("Posting...")
+        this.progress?.show()
+
+        val text = editText.text.toString()
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://micro.blog/micropub"
+
+        val rq = object : StringRequest(
+                Request.Method.POST,
+                url,
+                Response.Listener<String> { response ->
+                    Log.i("MainActivity", "resp: $response")
+                    this.progress?.hide()
+                    Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
+                    editText.setText("")
+                },
+                Response.ErrorListener { error ->
+                    Log.i("MainActivity", "err: $error msg: ${error.message}")
+                    this.progress?.hide()
+                    Snackbar.make(view, "Error: $error", Snackbar.LENGTH_LONG).show()
+                    // TODO: Handle error
+                }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                val prefs = this@MainActivity.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+                val token: String? = prefs?.getString(TOKEN, null)
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["h"] = "entry"
+                params["content"] = text
+                return params
+            }
+        }
+        queue.add(rq)
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -137,7 +149,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun spinner(message: String): ProgressDialog {
+        val spinner = ProgressDialog(this)
+        spinner.setMessage(message)
+        spinner.isIndeterminate = true
+        return spinner
+    }
+
     private fun postImage(image: ByteArray) {
+        this.progress = spinner("Uploading...")
+        this.progress?.show()
         getMediaEndpoint(image)
     }
 
@@ -148,7 +169,7 @@ class MainActivity : AppCompatActivity() {
         headers["Authorization"] = "Bearer $token"
 
         val rq = MultipartRequest(endpoint,
-               headers,
+                headers,
                 Response.Listener {
                     if (it != null) {
                         val data = String(it.data)
@@ -157,11 +178,13 @@ class MainActivity : AppCompatActivity() {
                         if (obj["url"] != null) {
                             val imgURL = obj["url"] as String
                             editText.setText("\n\n![]($imgURL)")
+                            this.progress?.hide()
                             editText.requestFocus()
                         }
                     }
                 },
                 Response.ErrorListener {
+                    this.progress?.hide()
                     if (it.networkResponse != null) {
                         Log.i("MainActivity", "Error: ${String(it.networkResponse.data)}")
                     } else {
@@ -186,9 +209,9 @@ class MainActivity : AppCompatActivity() {
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
+                    this.progress?.hide()
                     // TODO: Handle error
-                })
-        {
+                }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
@@ -211,8 +234,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
