@@ -146,8 +146,6 @@ class MainActivity : AppCompatActivity() {
         val prefs = this@MainActivity.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
         val token: String? = prefs?.getString(TOKEN, null)
         headers["Authorization"] = "Bearer $token"
-//        headers["Content-Type"] = "multipart/form-data"
-//        headers["Content-Length"] = "${image.size}"
 
         val rq = MultipartRequest(endpoint,
                headers,
@@ -166,6 +164,8 @@ class MainActivity : AppCompatActivity() {
                 Response.ErrorListener {
                     if (it.networkResponse != null) {
                         Log.i("MainActivity", "Error: ${String(it.networkResponse.data)}")
+                    } else {
+                        Log.i("MainActivity", "Error without network response: ${it.message}")
                     }
                 })
         rq.addPart(MultipartRequest.FilePart("file", "image/jpeg", "file", image))
