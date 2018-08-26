@@ -12,6 +12,7 @@ import android.view.Menu
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_timeline.*
@@ -52,17 +53,21 @@ class TimelineActivity : AppCompatActivity() {
 
     private fun getTimeline() {
         val url = "https://micro.blog/posts/all"
-        val rq = object : StringRequest(
-                Request.Method.GET,
+        val rq = object : JsonObjectRequest(
                 url,
-                Response.Listener<String> { response ->
+                null,
+                Response.Listener<JSONObject> { response ->
                     Log.i("MainActivity", "resp: $response")
-                    val json = JSONObject(response)
-                    Log.i("MainActivity", "json: $json")
-                    val items = json["items"] as JSONArray
-//                    for (item in items) {
-//                        this.posts.add(Post(item["content_html"] as String))
-//                    }
+//                    val json = JSONObject(response)
+//                    Log.i("MainActivity", "json: $json")
+                    val items = response["items"] as JSONArray
+                    for(i in 0 until items.length()) {
+                        val item = items[i] as JSONObject
+                        val text = item["content_html"] as String
+                        Log.i("MainActivity", "item: $text")
+                        this.posts.add(Post(item["content_html"] as String))
+                    }
+                    this.adapter.notifyDataSetChanged()
                     this.progress?.hide()
                 },
                 Response.ErrorListener { error ->

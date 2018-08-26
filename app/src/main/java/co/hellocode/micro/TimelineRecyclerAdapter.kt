@@ -1,6 +1,7 @@
 package co.hellocode.micro
 import android.support.constraint.R.id.parent
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,9 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
 
         fun bindPost(post: Post) {
             this.post = post
-            view.itemText.text = post.text
+            val html = Html.fromHtml(post.text)
+//            Log.i("TimelineRecyclerAdapter", "html: $html")
+            view.itemText.text = html
         }
 
         companion object {
