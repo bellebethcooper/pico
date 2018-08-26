@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import com.android.volley.AuthFailureError
@@ -19,11 +20,19 @@ import org.json.JSONObject
 class TimelineActivity : AppCompatActivity() {
 
     var progress: ProgressDialog? = null
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var adapter: TimelineRecyclerAdapter
+    private var posts = ArrayList<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
         setSupportActionBar(toolbar)
+        this.linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = this.linearLayoutManager
+        this.adapter = TimelineRecyclerAdapter(this.posts)
+        recyclerView.adapter = this.adapter
+
         fab.setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -47,9 +56,10 @@ class TimelineActivity : AppCompatActivity() {
                 url,
                 Response.Listener<String> { response ->
                     Log.i("MainActivity", "resp: $response")
-                    this.progress?.hide()
                     val json = JSONObject(response)
                     Log.i("MainActivity", "json: $json")
+                    val items = json["items"]
+                    this.progress?.hide()
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")

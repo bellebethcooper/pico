@@ -62,12 +62,12 @@
                 android:id="@+id/photoButton"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:background="#000000"
+                android:layout_alignParentEnd="true"
+                android:background="?android:selectableItemBackground"
                 android:contentDescription="Photo picker button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo"
-                android:tint="#ffffff" />
+                android:tint="@color/colorGreyMid" />
 
             <Button
                 android:id="@+id/sendButton"
