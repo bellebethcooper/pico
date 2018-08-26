@@ -15,6 +15,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_timeline.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class TimelineActivity : AppCompatActivity() {
@@ -58,7 +59,10 @@ class TimelineActivity : AppCompatActivity() {
                     Log.i("MainActivity", "resp: $response")
                     val json = JSONObject(response)
                     Log.i("MainActivity", "json: $json")
-                    val items = json["items"]
+                    val items = json["items"] as JSONArray
+//                    for (item in items) {
+//                        this.posts.add(Post(item["content_html"] as String))
+//                    }
                     this.progress?.hide()
                 },
                 Response.ErrorListener { error ->
