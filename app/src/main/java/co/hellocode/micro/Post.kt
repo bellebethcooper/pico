@@ -6,10 +6,10 @@ import android.text.style.ImageSpan
 import android.util.Log
 import com.squareup.picasso.Picasso
 import net.nightwhistler.htmlspanner.HtmlSpanner
+import java.util.*
 
 
-
-class Post(var text: String, val author: String, val username: String, val isConversation: Boolean = false) {
+class Post(val ID: Int, var text: String, val author: String, val username: String, val isConversation: Boolean = false, date: Date, val mentions: ArrayList<String>) {
     var html: Spanned = Html.fromHtml(this.text)
 
 //    val imageGetter = Html.ImageGetter {

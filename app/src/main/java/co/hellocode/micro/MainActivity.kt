@@ -30,6 +30,7 @@ const private val PICK_IMAGE = 1
 class MainActivity : AppCompatActivity() {
 
     var progress: ProgressDialog? = null
+    var replyPostID: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,23 @@ class MainActivity : AppCompatActivity() {
                     })
                     .create()
                     .show()
+        }
+
+        val postID = intent.getIntExtra("postID", 0)
+        if (postID != 0) {
+            // this must be a reply, because we have a postID to reply to
+            var startText = ""
+            val author = intent.getStringExtra("author")
+            Log.i("MainActivity", "author: $author")
+            startText = startText + "@$author "
+            Log.i("MainActivity", "starting: $startText")
+            val mentions = intent.getStringArrayListExtra("mentions")
+            Log.i("MainActivity", "mentions: $mentions")
+            for (mention in mentions) {
+                startText = startText + "$mention "
+            }
+            Log.i("MainActivity", "starting: $startText")
+            editText.setText(startText)
         }
 
         editText.requestFocus()
@@ -91,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                     this.progress?.hide()
                     Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
                     editText.setText("")
+                    this.finish()
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
@@ -162,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                         val obj = JSONObject(data)
                         if (obj["url"] != null) {
                             val imgURL = obj["url"] as String
-                            editText.setText("\n\n![]($imgURL)")
+                            editText.append("\n\n![]($imgURL)")
                             this.progress?.hide()
                             Snackbar.make(editText.rootView, "Attached image to your post.", Snackbar.LENGTH_SHORT).show()
                             editText.requestFocus()

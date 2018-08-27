@@ -21,6 +21,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import android.text.style.ImageSpan
 import com.squareup.picasso.Picasso
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TimelineActivity : AppCompatActivity() {
@@ -65,7 +68,17 @@ class TimelineActivity : AppCompatActivity() {
                     val items = response["items"] as JSONArray
                     for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
+                        val id = (item["id"] as String).toInt()
                         val text = item["content_html"] as String
+                        var mentions: ArrayList<String> = arrayListOf()
+                        val regex = Regex("[@]\\w+")
+                        val all = regex.findAll(text)
+                        for (match in all) {
+                            mentions.add(match.value)
+                        }
+                        val datePublished = item["date_published"] as String
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'ss':'ss")
+                        val date = dateFormat.parse(datePublished)
                         val author = (item["author"] as JSONObject)
                         val authorName : String = author.getString("name")
                         val username = (author["_microblog"] as JSONObject).getString("username")
@@ -73,7 +86,7 @@ class TimelineActivity : AppCompatActivity() {
 //                        Log.i("MainActivity", microblogData.toString())
                         val isConversation: Boolean = microblogData.getBoolean("is_conversation")
 //                        Log.i("MainActivity", "item: $text")
-                        this.posts.add(Post(item["content_html"] as String, authorName, username, isConversation))
+                        this.posts.add(Post(id, text, authorName, username, isConversation, date, mentions))
                     }
                     this.adapter.notifyDataSetChanged()
                     this.progress?.hide()

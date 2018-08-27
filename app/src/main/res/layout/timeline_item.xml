@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="author"
                 android:textStyle="bold"
+                android:textColor="@android:color/black"
                 android:layout_weight="1"/>
 
             <ImageButton
@@ -46,6 +47,7 @@
             android:layout_marginTop="8dp"
             android:textSize="18dp"
             android:background="@android:color/white"
+            android:textColor="@color/colorGreyDark"
             android:text="The text for the item will go here." />
 
     </LinearLayout>
