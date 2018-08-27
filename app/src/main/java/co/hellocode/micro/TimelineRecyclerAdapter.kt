@@ -1,4 +1,5 @@
 package co.hellocode.micro
+import android.support.constraint.R.id.gone
 import android.support.constraint.R.id.parent
 import android.support.v7.widget.RecyclerView
 import android.text.Html
@@ -41,6 +42,9 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
 //            Log.i("TimelineRecyclerAdapter", "html: $html")
             view.itemText.text = post.html
             view.author.text = post.author
+            if (!post.isConversation) {
+                view.conversationButton.visibility = View.GONE
+            }
 //            for (img in html.getSpans(0,
 //                    html.length(), ImageSpan::class.java)) {
 //                if (!getImageFile(img).isFile()) {

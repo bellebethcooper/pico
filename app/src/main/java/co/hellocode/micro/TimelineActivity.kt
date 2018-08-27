@@ -62,15 +62,18 @@ class TimelineActivity : AppCompatActivity() {
                 null,
                 Response.Listener<JSONObject> { response ->
                     Log.i("MainActivity", "resp: $response")
-//                    val json = JSONObject(response)
-//                    Log.i("MainActivity", "json: $json")
                     val items = response["items"] as JSONArray
                     for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
                         val text = item["content_html"] as String
-                        val authorName : String = (item["author"] as JSONObject).getString("name")
-                        Log.i("MainActivity", "item: $text")
-                        this.posts.add(Post(item["content_html"] as String, authorName))
+                        val author = (item["author"] as JSONObject)
+                        val authorName : String = author.getString("name")
+                        val username = (author["_microblog"] as JSONObject).getString("username")
+                        val microblogData = (item["_microblog"] as JSONObject)
+//                        Log.i("MainActivity", microblogData.toString())
+                        val isConversation: Boolean = microblogData.getBoolean("is_conversation")
+//                        Log.i("MainActivity", "item: $text")
+                        this.posts.add(Post(item["content_html"] as String, authorName, username, isConversation))
                     }
                     this.adapter.notifyDataSetChanged()
                     this.progress?.hide()
