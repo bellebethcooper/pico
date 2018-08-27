@@ -1,40 +1,29 @@
 package co.hellocode.micro
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
-import android.support.design.widget.TextInputEditText
-import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.android.volley.*
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_new_post.*
 import org.json.JSONObject
 import uk.me.hardill.volley.multipart.MultipartRequest
 import java.io.ByteArrayOutputStream
-import javax.security.auth.login.LoginException
 
 const private val PICK_IMAGE = 1
 
@@ -44,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_new_post)
         setSupportActionBar(toolbar)
 
         val prefs = this.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)

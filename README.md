@@ -14,12 +14,14 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 
 ## To do:
 
+See the issues for a more up-to-date list of things-to-do!
+
 - [x] Take and store user app token
 - [x] Send posts to hosted Micro.blog accounts
 - [ ] Support for blogs not hosted by Micro.blog
 - [x] Clear text box after posting
 - [x] Character count
 - [x] Choose custom colours
-- [ ] Improve design
+- [x] Improve design (This is a work-in-progress, but it's been started)
 - [ ] Check user's token before saving and showing success message
 - [x] Support for posting images

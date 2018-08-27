@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,7 +21,9 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:elevation="0dp"
-            app:titleTextAppearance="@style/Toolbar.TitleText"/>
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:title="New post"
+            />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -32,7 +35,7 @@
         android:paddingHorizontal="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".MainActivity"
-        tools:showIn="@layout/activity_main"
+        tools:showIn="@layout/activity_new_post"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
@@ -51,7 +54,7 @@
                 android:lines="5"
                 android:scrollbars="vertical"
                 android:gravity="top|left"
-                android:hint="New post content"/>
+                />
         </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
