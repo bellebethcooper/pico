@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Html
 import android.util.Log
 import android.view.Menu
 import com.android.volley.AuthFailureError
@@ -18,6 +19,9 @@ import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
+import android.text.style.ImageSpan
+import com.squareup.picasso.Picasso
+
 
 class TimelineActivity : AppCompatActivity() {
 
@@ -61,7 +65,7 @@ class TimelineActivity : AppCompatActivity() {
 //                    val json = JSONObject(response)
 //                    Log.i("MainActivity", "json: $json")
                     val items = response["items"] as JSONArray
-                    for(i in 0 until items.length()) {
+                    for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
                         val text = item["content_html"] as String
                         Log.i("MainActivity", "item: $text")

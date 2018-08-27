@@ -2,9 +2,11 @@ package co.hellocode.micro
 import android.support.constraint.R.id.parent
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.style.ImageSpan
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
 class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
@@ -38,6 +40,19 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
             val html = Html.fromHtml(post.text)
 //            Log.i("TimelineRecyclerAdapter", "html: $html")
             view.itemText.text = html
+
+//            for (img in html.getSpans(0,
+//                    html.length(), ImageSpan::class.java)) {
+//                if (!getImageFile(img).isFile()) {
+//
+//                    // here you have to download the file
+//                }
+//
+//                fun getImageFile(img: ImageSpan) {}
+//                Picasso.get().load(img.source).into()
+//            }
+//
+//        }
         }
 
         companion object {
