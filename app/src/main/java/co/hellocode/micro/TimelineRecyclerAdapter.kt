@@ -37,10 +37,10 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
 
         fun bindPost(post: Post) {
             this.post = post
-            val html = Html.fromHtml(post.text)
-//            Log.i("TimelineRecyclerAdapter", "html: $html")
-            view.itemText.text = html
 
+//            Log.i("TimelineRecyclerAdapter", "html: $html")
+            view.itemText.text = post.html
+            view.author.text = post.author
 //            for (img in html.getSpans(0,
 //                    html.length(), ImageSpan::class.java)) {
 //                if (!getImageFile(img).isFile()) {

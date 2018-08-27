@@ -68,8 +68,9 @@ class TimelineActivity : AppCompatActivity() {
                     for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
                         val text = item["content_html"] as String
+                        val authorName : String = (item["author"] as JSONObject).getString("name")
                         Log.i("MainActivity", "item: $text")
-                        this.posts.add(Post(item["content_html"] as String))
+                        this.posts.add(Post(item["content_html"] as String, authorName))
                     }
                     this.adapter.notifyDataSetChanged()
                     this.progress?.hide()
