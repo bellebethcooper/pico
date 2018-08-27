@@ -45,18 +45,6 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
             if (!post.isConversation) {
                 view.conversationButton.visibility = View.GONE
             }
-//            for (img in html.getSpans(0,
-//                    html.length(), ImageSpan::class.java)) {
-//                if (!getImageFile(img).isFile()) {
-//
-//                    // here you have to download the file
-//                }
-//
-//                fun getImageFile(img: ImageSpan) {}
-//                Picasso.get().load(img.source).into()
-//            }
-//
-//        }
         }
 
         companion object {

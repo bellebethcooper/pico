@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_scrollFlags="scroll"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
+        >
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -21,7 +23,10 @@
                 app:titleTextAppearance="@style/Toolbar.TitleText"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways"/>
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="Timeline"
+                android:elevation="0dp"
+                />
 
     </android.support.design.widget.AppBarLayout>
 
