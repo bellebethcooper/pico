@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         val postID = intent.getIntExtra("postID", 0)
         if (postID != 0) {
+            this.replyPostID = postID
             // this must be a reply, because we have a postID to reply to
             var startText = ""
             val author = intent.getStringExtra("author")
@@ -99,7 +100,15 @@ class MainActivity : AppCompatActivity() {
 
         val text = editText.text.toString()
         val queue = Volley.newRequestQueue(this)
-        val url = "https://micro.blog/micropub"
+        val postUrl = "https://micro.blog/micropub"
+        val replyUrl = "https://micro.blog/posts/reply"
+        var url = postUrl
+
+            Log.i("MainActivity", "reply post id: $replyPostID")
+        if (this.replyPostID != null) {
+            url = replyUrl+"?id=$replyPostID"
+            Log.i("MainActivity", "post id: $replyPostID")
+        }
 
         val rq = object : StringRequest(
                 Request.Method.POST,
@@ -130,7 +139,11 @@ class MainActivity : AppCompatActivity() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params["h"] = "entry"
-                params["content"] = text
+                if (this@MainActivity.replyPostID != null) {
+                    params["text"] = text
+                } else {
+                    params["content"] = text
+                }
                 return params
             }
         }
