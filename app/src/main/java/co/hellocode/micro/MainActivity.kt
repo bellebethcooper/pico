@@ -117,6 +117,8 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
                     editText.setText("")
                     this.progress?.dismiss()
+                    val intent = Intent()
+                    setResult(Activity.RESULT_OK, intent)
                     this.finish()
                 },
                 Response.ErrorListener { error ->

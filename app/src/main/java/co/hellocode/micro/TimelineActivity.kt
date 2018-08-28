@@ -1,10 +1,11 @@
 package co.hellocode.micro
 
-import android.app.ProgressDialog
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
@@ -28,10 +29,10 @@ import java.util.*
 
 class TimelineActivity : AppCompatActivity() {
 
-    var progress: ProgressDialog? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: TimelineRecyclerAdapter
     private var posts = ArrayList<Post>()
+    private lateinit var refresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +43,32 @@ class TimelineActivity : AppCompatActivity() {
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
 
+
         fab.setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
         }
-        this.progress = spinner("Loading...")
-        this.progress?.show()
+
+        this.refresh = refresher
+        this.refresh.setOnRefreshListener { refresh() }
+        initialLoad()
+    }
+
+    fun initialLoad() {
+        this.refresh.isRefreshing = true
+        refresh()
+    }
+
+    fun refresh() {
         getTimeline()
     }
 
-    fun spinner(message: String): ProgressDialog {
-        val spinner = ProgressDialog(this)
-        spinner.setMessage(message)
-        spinner.isIndeterminate = true
-        return spinner
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == NEW_POST_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            refresh()
+        }
     }
 
     private fun getTimeline() {
@@ -89,11 +102,11 @@ class TimelineActivity : AppCompatActivity() {
                         this.posts.add(Post(id, text, authorName, username, isConversation, date, mentions))
                     }
                     this.adapter.notifyDataSetChanged()
-                    this.progress?.hide()
+                    this.refresh.isRefreshing = false
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
-                    this.progress?.hide()
+                    this.refresh.isRefreshing = false
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)
