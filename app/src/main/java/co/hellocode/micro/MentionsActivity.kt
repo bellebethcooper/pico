@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TimelineActivity : BaseTimelineActivity() {
-    override var url = "https://micro.blog/posts/all"
-    override open var title = "Timeline"
+class MentionsActivity : BaseTimelineActivity() {
+    override var url = "https://micro.blog/posts/mentions"
+    override open var title = "Mentions"
 }

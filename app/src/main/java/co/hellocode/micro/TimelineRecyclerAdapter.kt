@@ -23,8 +23,8 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
     override fun getItemCount() = posts.size
 
     override fun onBindViewHolder(p0: TimelineRecyclerAdapter.PostHolder, p1: Int) {
-        val itemPhoto = posts[p1]
-        p0.bindPost(itemPhoto)
+        val itemPost = posts[p1]
+        p0.bindPost(itemPost)
     }
 
     class PostHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
@@ -56,8 +56,6 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
 
         fun bindPost(post: Post) {
             this.post = post
-
-//            Log.i("TimelineRecyclerAdapter", "html: $html")
             view.itemText.text = post.html
             view.author.text = post.author
             if (!post.isConversation) {
