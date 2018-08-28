@@ -104,10 +104,8 @@ class MainActivity : AppCompatActivity() {
         val replyUrl = "https://micro.blog/posts/reply"
         var url = postUrl
 
-            Log.i("MainActivity", "reply post id: $replyPostID")
         if (this.replyPostID != null) {
             url = replyUrl+"?id=$replyPostID"
-            Log.i("MainActivity", "post id: $replyPostID")
         }
 
         val rq = object : StringRequest(
@@ -118,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                     this.progress?.hide()
                     Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
                     editText.setText("")
+                    this.progress?.dismiss()
                     this.finish()
                 },
                 Response.ErrorListener { error ->
@@ -137,6 +136,7 @@ class MainActivity : AppCompatActivity() {
 
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
+                Log.i("MainActivity", "getParams")
                 val params = HashMap<String, String>()
                 params["h"] = "entry"
                 if (this@MainActivity.replyPostID != null) {
@@ -147,6 +147,9 @@ class MainActivity : AppCompatActivity() {
                 return params
             }
         }
+        // set timeout to zero so Volley won't send multiple of the same request
+        // seems like a Volley bug: https://groups.google.com/forum/#!topic/volley-users/8PE9dBbD6iA
+        rq.retryPolicy = DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         queue.add(rq)
     }
 
