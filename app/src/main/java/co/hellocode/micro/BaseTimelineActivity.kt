@@ -14,6 +14,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_timeline.*
 import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
@@ -42,7 +43,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
         toolbar.title = title
 
         fab.setOnClickListener { view ->
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NewPostActivity::class.java)
             startActivityForResult(intent, NEW_POST_REQUEST_CODE)
         }
 

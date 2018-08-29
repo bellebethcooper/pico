@@ -45,7 +45,7 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
         }
 
         private fun newPostIntent(view: View) {
-            val intent = Intent(view.context, MainActivity::class.java)
+            val intent = Intent(view.context, NewPostActivity::class.java)
             post = post
             var id = post?.ID
             Log.i("Recycler", "id: $id")
