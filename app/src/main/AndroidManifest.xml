@@ -27,8 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MentionsActivity" />
-        <activity android:name=".DiscoverActivity"></activity>
+        <activity android:name=".MentionsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DiscoverActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ConversationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

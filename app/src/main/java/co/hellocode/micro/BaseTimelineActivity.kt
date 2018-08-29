@@ -9,11 +9,13 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import co.hellocode.micro.R.id.*
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_timeline.*
+import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -49,12 +51,14 @@ open class BaseTimelineActivity : AppCompatActivity() {
         initialLoad()
     }
 
-    fun initialLoad() {
+    open fun initialLoad() {
+        Log.i("BaseTimeline", "initialLoad")
         this.refresh.isRefreshing = true
         refresh()
     }
 
-    fun refresh() {
+    private fun refresh() {
+        Log.i("BaseTimeline", "refresh")
         getTimeline()
     }
 
@@ -71,6 +75,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
     }
 
     private fun getTimeline() {
+        Log.i("BaseTimeline", "getTimeline")
         val rq = object : JsonObjectRequest(
                 this.url,
                 null,

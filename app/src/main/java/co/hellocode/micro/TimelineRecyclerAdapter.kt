@@ -34,24 +34,37 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
         init {
             v.setOnClickListener(this)
             v.setOnLongClickListener {
-                Log.i("TimelineRecycler", "long press!")
                 if (post == null) { return@setOnLongClickListener false }
-
-                val intent = Intent(it.context, MainActivity::class.java)
-                var id = post?.ID
-                Log.i("Recycler", "id: $id")
-                intent.putExtra("postID", post?.ID)
-                intent.putExtra("author", post?.username)
-                if (post?.mentions != null) {
-                    intent.putStringArrayListExtra("mentions", post?.mentions)
-                }
-                it.context.startActivity(intent)
+                newPostIntent(it)
                 true
             }
         }
 
         override fun onClick(v: View) {
-            Log.d("RecyclerView", "CLICK!")
+            postDetailIntent(v)
+        }
+
+        private fun newPostIntent(view: View) {
+            val intent = Intent(view.context, MainActivity::class.java)
+            post = post
+            var id = post?.ID
+            Log.i("Recycler", "id: $id")
+            intent.putExtra("postID", post?.ID)
+            intent.putExtra("author", post?.username)
+            if (post?.mentions != null) {
+                intent.putStringArrayListExtra("mentions", post?.mentions)
+            }
+            view.context.startActivity(intent)
+        }
+
+        private fun postDetailIntent(view: View) {
+            Log.i("Recycler", "postDetailIntent")
+            val intent = Intent(view.context, ConversationActivity::class.java)
+            this.post = post
+            var id = post?.ID
+            Log.i("Recycler postDetailIntent", "id: $id")
+            intent.putExtra("postID", post?.ID)
+            view.context.startActivity(intent)
         }
 
         fun bindPost(post: Post) {
