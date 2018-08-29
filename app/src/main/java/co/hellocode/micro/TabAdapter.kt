@@ -3,13 +3,16 @@ package co.hellocode.micro
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import co.hellocode.micro.Fragments.DiscoverFragment
+import co.hellocode.micro.Fragments.MentionsFragment
+import co.hellocode.micro.Fragments.TimelineFragment
 
 class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? = when (position) {
         0 -> TimelineFragment.newInstance()
-        1 -> TimelineFragment.newInstance()
-        2 -> TimelineFragment.newInstance()
+        1 -> MentionsFragment.newInstance()
+        2 -> DiscoverFragment.newInstance()
         else -> null
     }
 
