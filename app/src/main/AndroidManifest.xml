@@ -23,17 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TimelineActivity"
-            android:label="Pico"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".MentionsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DiscoverActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ConversationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

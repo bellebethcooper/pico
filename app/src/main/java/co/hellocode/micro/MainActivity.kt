@@ -34,6 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "TabLayout Demo"
+        supportActionBar!!.title = "Pico"
     }
 }
