@@ -39,28 +39,6 @@ class NewPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_post)
         setSupportActionBar(toolbar)
 
-        val prefs = this.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
-        val token: String? = prefs?.getString(TOKEN, null)
-        if (token == null) {
-            Log.i("MainActivity", "token is null")
-            val input = EditText(this)
-            val builder = AlertDialog.Builder(this)
-//            val fragment = DialogFragment()
-            val dialog = builder.setView(input)
-                    .setTitle("Set your app token")
-                    .setNegativeButton("Cancel", { dialogInterface, i ->
-                        dialogInterface.cancel()
-                    })
-                    .setPositiveButton("Save", { dialogInterface, i ->
-                        Log.i("MainActivity", "token entered: ${input.text.toString()}")
-                        // Do something with value!
-                        prefs.edit().putString(TOKEN, input.text.toString().toLowerCase()).apply()
-                        Toast.makeText(this, "Token set, thanks.", Toast.LENGTH_SHORT).show()
-                    })
-                    .create()
-                    .show()
-        }
-
         val postID = intent.getIntExtra("postID", 0)
         if (postID != 0) {
             this.replyPostID = postID
