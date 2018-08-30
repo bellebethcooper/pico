@@ -2,13 +2,16 @@ package co.hellocode.micro
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
+import android.support.v4.content.pm.ShortcutManagerCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -39,6 +42,15 @@ class NewPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_post)
         setSupportActionBar(toolbar)
 
+        // Report that the user started a new post, so the new post shortcut gets shown to them by the OS
+        val mgr = this.getSystemService(ShortcutManager::class.java)
+        mgr.reportShortcutUsed("newpost")
+
+        // Check for a post passed by an intent
+        // This will happen if the New Post activity was opened to create a reply
+        // Use the post data passed by the intent to populate the text box
+        // with usernames to reply to, and to store the post ID to send to the API
+        // when submitting the reply
         val postID = intent.getIntExtra("postID", 0)
         if (postID != 0) {
             this.replyPostID = postID
@@ -59,6 +71,7 @@ class NewPostActivity : AppCompatActivity() {
 
         editText.requestFocus()
 
+        // Open the user's photo gallery app to let them choose an image
         photoButton.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
             getIntent.type = "image/*"
@@ -84,6 +97,7 @@ class NewPostActivity : AppCompatActivity() {
         val replyUrl = "https://micro.blog/posts/reply"
         var url = postUrl
 
+        // Use the reply URL with post ID appended if this post is a reply
         if (this.replyPostID != null) {
             url = replyUrl+"?id=$replyPostID"
         }
@@ -121,6 +135,7 @@ class NewPostActivity : AppCompatActivity() {
                 Log.i("MainActivity", "getParams")
                 val params = HashMap<String, String>()
                 params["h"] = "entry"
+                // If this is a reply, the content param name has to be "text" instead of "content" like a normal post
                 if (this@NewPostActivity.replyPostID != null) {
                     params["text"] = text
                 } else {
