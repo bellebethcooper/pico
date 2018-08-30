@@ -107,6 +107,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
     }
 
     open fun createPosts(items: JSONArray) {
+        this.posts.clear()
         for (i in 0 until items.length()) {
             val item = items[i] as JSONObject
             this.posts.add(Post(item))

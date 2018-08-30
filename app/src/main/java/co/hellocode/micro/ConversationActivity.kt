@@ -26,12 +26,11 @@ class ConversationActivity() : BaseTimelineActivity() {
     }
 
     override fun createPosts(items: JSONArray) {
+        this.posts.clear()
         for (i in 0 until items.length()) {
             val item = items[i] as JSONObject
             this.posts.add(Post(item))
         }
-        Log.i("ConversationActivity createPosts", "posts: ${this.posts}")
         this.posts.reverse()
-        Log.i("ConversationActivity createPosts", "posts reversed: ${this.posts}")
     }
 }
