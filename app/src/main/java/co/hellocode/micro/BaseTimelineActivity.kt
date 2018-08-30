@@ -43,7 +43,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             val intent = Intent(this, NewPostActivity::class.java)
             startActivityForResult(intent, NEW_POST_REQUEST_CODE)
         }
@@ -100,7 +100,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
                 val prefs = prefs()
-                val token: String? = prefs?.getString(TOKEN, null)
+                val token: String? = prefs.getString(TOKEN, null)
                 headers["Authorization"] = "Bearer $token"
                 return headers
             }

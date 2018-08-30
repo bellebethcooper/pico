@@ -1,0 +1,13 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="newpost"
+        android:enabled="true"
+        android:icon="@drawable/compose"
+        android:shortcutShortLabel="@string/new_post_shortcut_short_label"
+        android:shortcutLongLabel="@string/new_post_shortcut_long_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="co.hellocode.micro"
+            android:targetClass="co.hellocode.micro.NewPostActivity" />
+    </shortcut>
+</shortcuts>
