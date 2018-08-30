@@ -11,11 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.hellocode.micro.*
+import co.hellocode.micro.Utils.PREFS_FILENAME
+import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.baselayout_timeline.*
 import kotlinx.android.synthetic.main.baselayout_timeline.view.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -69,40 +70,26 @@ open class BaseTimelineFragment: Fragment() {
                 this.url,
                 null,
                 Response.Listener<JSONObject> { response ->
-                    Log.i("MainActivity", "resp: $response")
+                    Log.i("BaseTimelineFrag", "resp: $response")
                     val items = response["items"] as JSONArray
                     for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
-                        val id = (item["id"] as String).toInt()
-                        val text = item["content_html"] as String
-                        var mentions: ArrayList<String> = arrayListOf()
-                        val regex = Regex("[@]\\w+")
-                        val all = regex.findAll(text)
-                        for (match in all) {
-                            mentions.add(match.value)
-                        }
-                        val datePublished = item["date_published"] as String
-                        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'ss':'ss")
-                        val date = dateFormat.parse(datePublished)
-                        val author = (item["author"] as JSONObject)
-                        val authorName : String = author.getString("name")
-                        val username = (author["_microblog"] as JSONObject).getString("username")
-                        val microblogData = (item["_microblog"] as JSONObject)
-//                        Log.i("MainActivity", microblogData.toString())
-                        val isConversation: Boolean = microblogData.getBoolean("is_conversation")
-//                        Log.i("MainActivity", "item: $text")
-                        this.posts.add(Post(id, text, authorName, username, isConversation, date, mentions))
+                        this.posts.add(Post(item))
                     }
                     this.adapter.notifyDataSetChanged()
                     this.refresh.isRefreshing = false
                 },
                 Response.ErrorListener { error ->
-                    Log.i("MainActivity", "err: $error msg: ${error.message}")
+                    Log.i("BaseTimelineFrag", "err: $error")
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        Log.i("BaseTimelineFrag", "error is: ${error.networkResponse} msg: ${error.networkResponse.data.toString()}")
+                    }
                     this.refresh.isRefreshing = false
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
+                Log.i("BaseTimelineFrag", "getHeaders")
                 val headers = HashMap<String, String>()
                 val prefs = prefs()
                 val token: String? = prefs?.getString(TOKEN, null)

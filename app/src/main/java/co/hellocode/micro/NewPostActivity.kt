@@ -17,6 +17,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import co.hellocode.micro.Utils.PREFS_FILENAME
+import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley

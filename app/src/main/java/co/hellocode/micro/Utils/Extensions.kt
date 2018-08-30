@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.Utils
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater

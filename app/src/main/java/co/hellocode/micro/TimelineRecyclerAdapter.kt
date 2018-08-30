@@ -1,16 +1,10 @@
 package co.hellocode.micro
 import android.content.Intent
-import android.support.constraint.R.id.gone
-import android.support.constraint.R.id.parent
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
-import android.text.Html
-import android.text.style.ImageSpan
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_timeline.*
+import co.hellocode.micro.Utils.inflate
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
 class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
