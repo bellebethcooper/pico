@@ -23,7 +23,8 @@
         </activity>
         <activity
             android:name=".NewPostActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ConversationActivity"
             android:theme="@style/AppTheme.NoActionBar" />

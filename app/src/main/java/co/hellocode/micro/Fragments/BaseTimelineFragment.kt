@@ -1,6 +1,7 @@
 package co.hellocode.micro.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,12 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.hellocode.micro.*
+import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.baselayout_timeline.*
 import kotlinx.android.synthetic.main.baselayout_timeline.view.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -40,6 +43,10 @@ open class BaseTimelineFragment: Fragment() {
         view.recyclerView.adapter = this.adapter
         this.refresh = view.refresher
         this.refresh.setOnRefreshListener { refresh() }
+        view.fab.setOnClickListener {
+            val intent = Intent(this.activity, NewPostActivity::class.java)
+            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+        }
         return view
     }
 
