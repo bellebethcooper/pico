@@ -6,9 +6,13 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp">
 
         <ImageButton
             android:id="@+id/avatar"
@@ -18,11 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            android:paddingTop="5dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,10 +33,17 @@
                     android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="author"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:paddingStart="5dp"
+                    android:textColor="@color/colorGreyMid"
+                     />
 
                 <ImageButton
                     android:id="@+id/conversationButton"
@@ -56,19 +63,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|start"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:background="@android:color/white"
                 android:text="The text for the item will go here."
                 android:textColor="@color/colorGreyDark"
                 android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/dateView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:textSize="12dp"
+        android:textColor="@color/colorGreyMid"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        />
 
     <View
         android:layout_width="match_parent"
