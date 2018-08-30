@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import co.hellocode.micro.Utils.inflate
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
-class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
+open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TimelineRecyclerAdapter.PostHolder {
         val inflatedView = p0.inflate(R.layout.timeline_item, false)

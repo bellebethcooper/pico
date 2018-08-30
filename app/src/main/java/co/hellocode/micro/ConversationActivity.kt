@@ -3,6 +3,7 @@ package co.hellocode.micro
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.baselayout_timeline.*
 import kotlin.math.log
 
 class ConversationActivity() : BaseTimelineActivity() {
@@ -14,5 +15,11 @@ class ConversationActivity() : BaseTimelineActivity() {
         Log.i("Conversation", "id: $id")
         this.url = this.url + id.toString()
         super.initialLoad()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        this.adapter = ConversationRecyclerAdapter(this.posts)
+        recyclerView.adapter = this.adapter
     }
 }

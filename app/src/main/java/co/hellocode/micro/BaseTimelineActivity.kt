@@ -27,8 +27,8 @@ import java.util.*
 open class BaseTimelineActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var adapter: TimelineRecyclerAdapter
-    private var posts = ArrayList<Post>()
+    open lateinit var adapter: TimelineRecyclerAdapter
+    open var posts = ArrayList<Post>()
     private lateinit var refresh: SwipeRefreshLayout
     open var url = "https://micro.blog/posts/all"
     open var title = "Timeline"
