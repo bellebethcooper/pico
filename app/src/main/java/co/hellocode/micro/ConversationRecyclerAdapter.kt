@@ -1,10 +1,7 @@
 package co.hellocode.micro
 
-class ConversationRecyclerAdapter(private val posts: ArrayList<Post>) : TimelineRecyclerAdapter(posts) {
+import android.util.Log
 
-    init {
-        // Make convo read top to bottom
-        this.posts.reverse()
-    }
+class ConversationRecyclerAdapter(private val posts: ArrayList<Post>) : TimelineRecyclerAdapter(posts) {
 
 }

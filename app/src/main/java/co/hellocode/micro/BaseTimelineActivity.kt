@@ -84,10 +84,7 @@ open class BaseTimelineActivity : AppCompatActivity() {
                 Response.Listener<JSONObject> { response ->
                     Log.i("MainActivity", "resp: $response")
                     val items = response["items"] as JSONArray
-                    for (i in 0 until items.length()) {
-                        val item = items[i] as JSONObject
-                        this.posts.add(Post(item))
-                    }
+                    createPosts(items)
                     this.adapter.notifyDataSetChanged()
                     this.refresh.isRefreshing = false
                 },
@@ -107,5 +104,12 @@ open class BaseTimelineActivity : AppCompatActivity() {
         }
         val queue = Volley.newRequestQueue(this)
         queue.add(rq)
+    }
+
+    open fun createPosts(items: JSONArray) {
+        for (i in 0 until items.length()) {
+            val item = items[i] as JSONObject
+            this.posts.add(Post(item))
+        }
     }
 }

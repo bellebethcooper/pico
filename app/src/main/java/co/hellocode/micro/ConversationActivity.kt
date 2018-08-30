@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.baselayout_timeline.*
+import org.json.JSONArray
+import org.json.JSONObject
 import kotlin.math.log
 
 class ConversationActivity() : BaseTimelineActivity() {
@@ -21,5 +23,15 @@ class ConversationActivity() : BaseTimelineActivity() {
         super.onCreate(savedInstanceState)
         this.adapter = ConversationRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
+    }
+
+    override fun createPosts(items: JSONArray) {
+        for (i in 0 until items.length()) {
+            val item = items[i] as JSONObject
+            this.posts.add(Post(item))
+        }
+        Log.i("ConversationActivity createPosts", "posts: ${this.posts}")
+        this.posts.reverse()
+        Log.i("ConversationActivity createPosts", "posts reversed: ${this.posts}")
     }
 }
