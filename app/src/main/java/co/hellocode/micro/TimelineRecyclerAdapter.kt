@@ -1,6 +1,7 @@
 package co.hellocode.micro
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -63,11 +64,16 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
 
         fun bindPost(post: Post) {
             this.post = post
-            view.itemText.text = post.html
-            view.author.text = post.author
+            view.itemText.text = post.getParsedContent(view.context)
+            view.author.text = post.authorName
+            view.username.text = "@${post.username}"
             if (!post.isConversation) {
                 view.conversationButton.visibility = View.GONE
+            } else{
+                view.conversationButton.visibility = View.VISIBLE
             }
+
+            view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, post.date.time)
         }
 
         companion object {

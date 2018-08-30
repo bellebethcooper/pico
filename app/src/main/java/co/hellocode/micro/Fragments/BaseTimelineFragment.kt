@@ -53,7 +53,9 @@ open class BaseTimelineFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         Log.i("TimelineFragment", "onStart")
-        initialLoad()
+        if (this.posts.count() == 0){
+            initialLoad()
+        }
     }
 
     open fun initialLoad() {
@@ -79,6 +81,7 @@ open class BaseTimelineFragment: Fragment() {
                 Response.Listener<JSONObject> { response ->
                     Log.i("BaseTimelineFrag", "resp: $response")
                     val items = response["items"] as JSONArray
+                    this.posts.clear()
                     for (i in 0 until items.length()) {
                         val item = items[i] as JSONObject
                         this.posts.add(Post(item))
@@ -92,6 +95,7 @@ open class BaseTimelineFragment: Fragment() {
                         Log.i("BaseTimelineFrag", "error is: ${error.networkResponse} msg: ${error.networkResponse.data.toString()}")
                     }
                     this.refresh.isRefreshing = false
+
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)
