@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.Utils
 
 import android.content.Context
 import android.support.v4.view.ViewCompat.setTranslationY

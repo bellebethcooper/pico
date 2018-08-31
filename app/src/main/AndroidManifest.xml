@@ -18,18 +18,22 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.shortcuts"
+
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".NewPostActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:name=".NewPost.NewPostActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".ConversationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Profile"></activity>
     </application>
 
 </manifest>

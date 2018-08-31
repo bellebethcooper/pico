@@ -4,13 +4,11 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import co.hellocode.micro.R.id.toolbar
+import co.hellocode.micro.TabLayout.TabAdapter
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
 import kotlinx.android.synthetic.main.activity_main.*

@@ -8,6 +8,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="co.hellocode.micro"
-            android:targetClass="co.hellocode.micro.NewPostActivity" />
+            android:targetClass="co.hellocode.micro.NewPost.NewPostActivity" />
     </shortcut>
 </shortcuts>

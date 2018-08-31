@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import co.hellocode.micro.NewPost.NewPostActivity
 import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
@@ -20,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -104,6 +104,10 @@ open class BaseTimelineActivity : AppCompatActivity() {
         }
         val queue = Volley.newRequestQueue(this)
         queue.add(rq)
+    }
+
+    open fun getRequestComplete(response: JSONObject) {
+
     }
 
     open fun createPosts(items: JSONArray) {

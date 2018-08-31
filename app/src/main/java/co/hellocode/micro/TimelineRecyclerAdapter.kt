@@ -1,14 +1,15 @@
 package co.hellocode.micro
 
 import android.content.Intent
-import android.media.Image
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import co.hellocode.micro.NewPost.NewPostActivity
 import co.hellocode.micro.Utils.inflate
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -88,6 +89,7 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
 
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
+            view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
             view.author.text = post.authorName
             view.username.text = "@${post.username}"
             if (!post.isConversation) {
