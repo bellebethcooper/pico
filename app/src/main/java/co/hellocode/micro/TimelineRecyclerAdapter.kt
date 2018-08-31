@@ -1,4 +1,5 @@
 package co.hellocode.micro
+
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
@@ -8,11 +9,11 @@ import android.view.ViewGroup
 import co.hellocode.micro.Utils.inflate
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
-class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
+open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TimelineRecyclerAdapter.PostHolder {
         val inflatedView = p0.inflate(R.layout.timeline_item, false)
-        return PostHolder(inflatedView)
+        return PostHolder(inflatedView, canShowConversations)
     }
 
     override fun getItemCount() = posts.size
@@ -22,21 +23,27 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
         p0.bindPost(itemPost)
     }
 
-    class PostHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+    class PostHolder(v: View, private var canShowConversations: Boolean) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
         private var post: Post? = null
 
         init {
-            v.setOnClickListener(this)
+            if (this.canShowConversations) {
+                v.setOnClickListener(this)
+            }
             v.setOnLongClickListener {
-                if (post == null) { return@setOnLongClickListener false }
+                if (post == null) {
+                    return@setOnLongClickListener false
+                }
                 newPostIntent(it)
                 true
             }
         }
 
         override fun onClick(v: View) {
-            postDetailIntent(v)
+            if (this.canShowConversations) {
+                postDetailIntent(v)
+            }
         }
 
         private fun newPostIntent(view: View) {
@@ -69,7 +76,7 @@ class TimelineRecyclerAdapter(private val posts: ArrayList<Post>) : RecyclerView
             view.username.text = "@${post.username}"
             if (!post.isConversation) {
                 view.conversationButton.visibility = View.GONE
-            } else{
+            } else {
                 view.conversationButton.visibility = View.VISIBLE
             }
 
