@@ -6,7 +6,9 @@ import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import co.hellocode.micro.Utils.inflate
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
 open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
@@ -70,6 +72,14 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
         }
 
         fun bindPost(post: Post) {
+            // remove any image views leftover from reusing views
+            for (i in 0 until view.post_layout.childCount) {
+                val v = view.post_layout.getChildAt(i)
+                if (v is ImageView) {
+                    view.post_layout.removeViewAt(i)
+                }
+            }
+
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
             view.author.text = post.authorName
@@ -81,6 +91,12 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             }
 
             view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, post.date.time)
+
+            for (i in post.imageSources) {
+                val imageView = ImageView(view.context)
+                view.post_layout.addView(imageView)
+                Picasso.get().load(i).into(imageView)
+            }
         }
 
         companion object {
