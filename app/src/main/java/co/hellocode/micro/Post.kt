@@ -25,6 +25,7 @@ class Post(val item: JSONObject) {
     val content: String
     val html: Spanned
     val authorName: String
+    val authorAvatarURL: String
     val username: String
     var isConversation: Boolean = false
     val date: Date
@@ -36,7 +37,7 @@ class Post(val item: JSONObject) {
         val text = item["content_html"] as String
         content = text.trim()
         this.html = Html.fromHtml(content)
-        var mentions: ArrayList<String> = arrayListOf()
+        val mentions: ArrayList<String> = arrayListOf()
         val regex = Regex("[@]\\w+")
         val all = regex.findAll(text)
         for (match in all) {
@@ -48,6 +49,7 @@ class Post(val item: JSONObject) {
         this.date = dateFormat.parse(datePublished)
         val author = (item["author"] as JSONObject)
         this.authorName = author.getString("name")
+        this.authorAvatarURL = author.getString("avatar")
         this.username = (author["_microblog"] as JSONObject).getString("username")
         val microblogData = (item["_microblog"] as JSONObject)
         this.isConversation = microblogData.getBoolean("is_conversation")

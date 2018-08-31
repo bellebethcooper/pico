@@ -12,12 +12,16 @@
         android:paddingBottom="5dp"
         android:paddingEnd="15dp"
         android:paddingStart="5dp"
-        android:paddingTop="5dp">
+        android:paddingTop="8dp">
 
         <ImageButton
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:contentDescription="Author avatar"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="fitCenter"/>
 
         <LinearLayout
             android:id="@+id/post_layout"

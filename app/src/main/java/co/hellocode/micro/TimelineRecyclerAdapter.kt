@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import co.hellocode.micro.Utils.inflate
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
 open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
@@ -79,6 +80,8 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
                     view.post_layout.removeViewAt(i)
                 }
             }
+            // and remove user avatar image
+            view.avatar.setImageDrawable(null)
 
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
@@ -91,6 +94,8 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             }
 
             view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, post.date.time)
+
+            Picasso.get().load(post.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
 
             for (i in post.imageSources) {
                 val imageView = ImageView(view.context)
