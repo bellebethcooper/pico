@@ -10,7 +10,7 @@ import kotlin.math.log
 
 class ConversationActivity() : BaseTimelineActivity() {
     override var url = "https://micro.blog/posts/conversation?id="
-    override open var title = ""
+    override var title = ""
 
     override fun initialLoad() {
         val id = intent.getIntExtra("postID", 0)
@@ -21,7 +21,7 @@ class ConversationActivity() : BaseTimelineActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.adapter = ConversationRecyclerAdapter(this.posts)
+        this.adapter = TimelineRecyclerAdapter(this.posts, canShowConversations = false)
         recyclerView.adapter = this.adapter
     }
 
