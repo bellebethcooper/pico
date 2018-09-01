@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                         dialogInterface.cancel()
                     }
                     .setPositiveButton("Save") { _, _ ->
-                        Log.i("MainActivity", "token entered: ${input.text.toString()}")
                         // Put token in sharedPrefs so we can use it to make network calls later
                         prefs.edit().putString(TOKEN, input.text.toString().toLowerCase()).apply()
                         Toast.makeText(this, "Token set, thanks.", Toast.LENGTH_SHORT).show()

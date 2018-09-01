@@ -24,7 +24,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-open class BaseTimelineActivity : AppCompatActivity() {
+abstract class BaseTimelineActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     open lateinit var adapter: TimelineRecyclerAdapter
@@ -35,13 +35,14 @@ open class BaseTimelineActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_timeline)
+        setContentView(contentView())
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
         this.linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = this.linearLayoutManager
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
+        Log.i("BaseTimeline", "recycler: $recyclerView")
 
         fab.setOnClickListener {
             val intent = Intent(this, NewPostActivity::class.java)
@@ -51,6 +52,10 @@ open class BaseTimelineActivity : AppCompatActivity() {
         this.refresh = refresher
         this.refresh.setOnRefreshListener { refresh() }
         initialLoad()
+    }
+
+    open fun contentView() : Int {
+        return R.layout.activity_timeline
     }
 
     open fun initialLoad() {
@@ -82,9 +87,10 @@ open class BaseTimelineActivity : AppCompatActivity() {
                 this.url,
                 null,
                 Response.Listener<JSONObject> { response ->
-                    Log.i("MainActivity", "resp: $response")
+//                    Log.i("MainActivity", "resp: $response")
                     val items = response["items"] as JSONArray
                     createPosts(items)
+                    getRequestComplete(response)
                     this.adapter.notifyDataSetChanged()
                     this.refresh.isRefreshing = false
                 },

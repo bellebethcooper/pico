@@ -45,6 +45,16 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
                 newPostIntent(it)
                 true
             }
+            v.avatar.setOnClickListener {
+                avatarClick(it)
+            }
+        }
+
+        private fun avatarClick(view: View) {
+            if (this.post?.username == null) { return }
+            val intent = Intent(view.context, ProfileActivity::class.java)
+            intent.putExtra("username", this.post?.username)
+            view.context.startActivity(intent)
         }
 
         override fun onClick(v: View) {
@@ -89,7 +99,7 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
 
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
-            view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
+//            view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
             view.author.text = post.authorName
             view.username.text = "@${post.username}"
             if (!post.isConversation) {

@@ -18,10 +18,8 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
@@ -33,7 +31,7 @@
         <activity
             android:name=".ConversationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
-
 </manifest>
