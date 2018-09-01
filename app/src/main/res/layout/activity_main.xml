@@ -30,7 +30,7 @@
             style="@style/CustomTabLayout"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:background="@android:color/white"
             app:tabGravity="fill"
             app:tabMode="fixed" />
