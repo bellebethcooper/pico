@@ -47,7 +47,8 @@ class NewPostActivity : AppCompatActivity() {
         // Use the post data passed by the intent to populate the text box
         // with usernames to reply to, and to store the post ID to send to the API
         // when submitting the reply
-        val author = intent.getStringExtra("author")
+        val author = intent.getStringExtra("@string/reply_intent_extra_author")
+        Log.i("NewPostAct", "author: $author")
         if (author != null) {
             // this must be a reply, because we have an author to reply to
             val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
@@ -60,8 +61,10 @@ class NewPostActivity : AppCompatActivity() {
             var startText = ""
             startText += "@$author "
             val mentions = intent.getStringArrayListExtra("mentions")
-            for (mention in mentions) {
-                startText += "$mention "
+            if (mentions != null) {
+                for (mention in mentions) {
+                    startText += "$mention "
+                }
             }
             editText.setText(startText)
         }

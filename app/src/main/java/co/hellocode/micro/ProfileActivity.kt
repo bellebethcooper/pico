@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -17,6 +18,7 @@ import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -51,9 +53,9 @@ class ProfileActivity : AppCompatActivity() {
         this.adapter = TimelineRecyclerAdapter(this.posts)
         profile_recyclerView.adapter = this.adapter
         Log.i("BaseTimeline", "recycler: $profile_recyclerView")
-
-        this.refresh = profile_refresher
-        this.refresh.setOnRefreshListener { refresh() }
+        collapsing_toolbar.setCollapsedTitleTextColor(resources.getColor(R.color.colorWhite))
+        refresh = profile_refresher
+        refresh.setOnRefreshListener { refresh() }
         initialLoad()
     }
 
@@ -93,7 +95,10 @@ class ProfileActivity : AppCompatActivity() {
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
                     this.refresh.isRefreshing = false
-                    // TODO: Handle error
+                    if (error is TimeoutError) {
+                        Snackbar.make(this.profile_recyclerView, "Request timed out; trying again", Snackbar.LENGTH_SHORT)
+                        this.getTimeline()
+                    }
                 }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -118,29 +123,45 @@ class ProfileActivity : AppCompatActivity() {
 
     fun getRequestComplete(response: JSONObject) {
         val author = response.getJSONObject("author")
+        val microBlog = response.getJSONObject("_microblog")
+        setProfileData(author, microBlog)
+        collapsing_profile_follow_button.setOnClickListener { followButtonTapped(this.username) }
+        setToolbarTitle(this.username)
+        setFABListener()
+    }
+
+    fun setProfileData(author: JSONObject, microBlogData: JSONObject) {
         collapsing_profile_name_view.text = author.getString("name")
-        collapsing_profile_website.text = author.getString("url")
+        val website = author.getString("url")
+        if (website.length > 0) {
+            collapsing_profile_website.text = website
+        } else {
+            collapsing_profile_website.visibility = View.GONE
+        }
         val avatarURL = author.getString("avatar")
         Picasso.get().load(avatarURL).transform(CropCircleTransformation()).into(collapsing_profile_avatar)
-        val microBlog = response.getJSONObject("_microblog")
-        collapsing_profile_username.text = microBlog.getString("username")
-        collapsing_profile_bio.text = microBlog.getString("bio")
-        val isYou = microBlog.getBoolean("is_you")
+        collapsing_profile_username.text = microBlogData.getString("username")
+
+        val bio = microBlogData.getString("bio")
+        if (bio.length > 0) {
+            collapsing_profile_bio.text = bio
+        } else {
+            collapsing_profile_bio.visibility = View.GONE
+        }
+        val isYou = microBlogData.getBoolean("is_you")
         if (isYou) {
             collapsing_profile_follow_button.visibility = View.GONE
         } else {
-            following = microBlog.getBoolean("is_following")
+            following = microBlogData.getBoolean("is_following")
             collapsing_profile_follow_button.text = if (this.following == true) "Unfollow" else "Follow"
         }
-        collapsing_profile_follow_button.setOnClickListener { followButtonTapped(this.username) }
-        collapsing_toolbar.setCollapsedTitleTextColor(resources.getColor(R.color.colorWhite))
-        setToolbarTitle(this.username)
-        setFABListener()
+
     }
 
     fun setFABListener() {
         profile_fab.setOnClickListener {
             val intent = Intent(this, NewPostActivity::class.java)
+            Log.i("ProfileAct", "author: $username")
             intent.putExtra("@string/reply_intent_extra_author", this.username)
             startActivityForResult(intent, NEW_POST_REQUEST_CODE)
         }
