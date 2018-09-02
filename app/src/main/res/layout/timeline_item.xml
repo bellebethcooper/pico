@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:layout_marginEnd="12dp"
             android:contentDescription="Author avatar"
-            android:background="?android:selectableItemBackground"
+            android:background="@android:color/transparent"
             android:scaleType="fitCenter"/>
 
         <LinearLayout

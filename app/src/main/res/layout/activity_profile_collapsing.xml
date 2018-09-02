@@ -78,7 +78,7 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/black_button_background"
+                    android:background="@drawable/white_button_background"
                     android:elevation="0dp"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
@@ -89,6 +89,7 @@
                     android:id="@+id/collapsing_profile_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autoLink="web"
                     android:layout_marginTop="12dp"
                     android:gravity="center_horizontal"
                     android:textColor="@android:color/white"
@@ -149,7 +150,7 @@
         android:src="@drawable/reply"
         android:tint="@android:color/white"
         app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"
+        app:fabSize="mini"
         app:layout_anchor="@+id/collapsing_profile_appbar"
         app:layout_anchorGravity="bottom|right|end" />
 
