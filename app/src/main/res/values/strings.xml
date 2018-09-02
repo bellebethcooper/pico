@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="reply_intent_extra_postID">postID</string>
+    <string name="reply_intent_extra_author">author</string>
     <string name="new_post_shortcut_short_label">New post</string>
     <string name="new_post_shortcut_long_label">Create a new post</string>
 </resources>

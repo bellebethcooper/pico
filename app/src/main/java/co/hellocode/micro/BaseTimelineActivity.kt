@@ -69,6 +69,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         getTimeline()
     }
 
+    // TODO: Remove this, because the API is aggressively cached anyway, so this isn't useful
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

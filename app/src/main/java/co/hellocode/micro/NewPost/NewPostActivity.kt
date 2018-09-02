@@ -47,12 +47,17 @@ class NewPostActivity : AppCompatActivity() {
         // Use the post data passed by the intent to populate the text box
         // with usernames to reply to, and to store the post ID to send to the API
         // when submitting the reply
-        val postID = intent.getIntExtra("postID", 0)
-        if (postID != 0) {
-            this.replyPostID = postID
-            // this must be a reply, because we have a postID to reply to
+        val author = intent.getStringExtra("author")
+        if (author != null) {
+            // this must be a reply, because we have an author to reply to
+            val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
+            if (postID != null) {
+                // postID could still be null, because there's a reply action on profile pages
+                // that lets the user "reply" to the person whose profile they're looking at
+                // but not to any particular post of theirs
+                this.replyPostID = postID
+            }
             var startText = ""
-            val author = intent.getStringExtra("author")
             startText += "@$author "
             val mentions = intent.getStringArrayListExtra("mentions")
             for (mention in mentions) {
@@ -91,7 +96,7 @@ class NewPostActivity : AppCompatActivity() {
 
         // Use the reply URL with post ID appended if this post is a reply
         if (this.replyPostID != null) {
-            url = replyUrl+"?id=$replyPostID"
+            url = replyUrl + "?id=$replyPostID"
         }
 
         val rq = object : StringRequest(

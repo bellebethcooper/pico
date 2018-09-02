@@ -68,8 +68,8 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             post = post
             var id = post?.ID
             Log.i("Recycler", "id: $id")
-            intent.putExtra("postID", post?.ID)
-            intent.putExtra("author", post?.username)
+            intent.putExtra("@string/reply_intent_extra_author", post?.ID)
+            intent.putExtra("@string/reply_intent_extra_author", post?.username)
             if (post?.mentions != null) {
                 intent.putStringArrayListExtra("mentions", post?.mentions)
             }
