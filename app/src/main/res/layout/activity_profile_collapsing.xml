@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:background="@android:color/white"
-            android:foregroundTint="@android:color/black"
+            android:background="@android:color/black"
+            android:foregroundTint="@android:color/white"
             app:expandedTitleMarginStart="@dimen/activity_margin_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -59,7 +59,7 @@
                             android:id="@+id/collapsing_profile_name_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             android:textSize="28sp"
                             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                             android:id="@+id/collapsing_profile_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorGreyDark"
+                            android:textColor="@color/colorGreyLight"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -81,7 +81,7 @@
                     android:background="@drawable/black_button_background"
                     android:elevation="0dp"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:letterSpacing="0.1" />
 
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center_horizontal"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -99,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -147,8 +148,8 @@
         android:clickable="true"
         android:src="@drawable/reply"
         android:tint="@android:color/white"
-        app:backgroundTint="@android:color/black"
-        app:fabSize="mini"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
         app:layout_anchor="@+id/collapsing_profile_appbar"
         app:layout_anchorGravity="bottom|right|end" />
 

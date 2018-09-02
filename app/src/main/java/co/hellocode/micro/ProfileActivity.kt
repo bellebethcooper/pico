@@ -23,7 +23,6 @@ import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile_collapsing.*
 import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
@@ -140,7 +139,7 @@ class ProfileActivity : AppCompatActivity() {
             collapsing_profile_follow_button.text = if (this.following == true) "Unfollow" else "Follow"
         }
         collapsing_profile_follow_button.setOnClickListener { followButtonTapped(this.username) }
-        collapsing_toolbar.setCollapsedTitleTextColor(resources.getColor(R.color.colorBlack))
+        collapsing_toolbar.setCollapsedTitleTextColor(resources.getColor(R.color.colorWhite))
         setToolbarTitle(this.username)
     }
 
@@ -181,11 +180,11 @@ class ProfileActivity : AppCompatActivity() {
                 Response.Listener<String> { response ->
                     if (this.following) {
                         // this.following is already true, so we just unfollowed
-                        this.follow_button.text = "Follow"
+                        collapsing_profile_follow_button.text = "Follow"
                         this.following = false
                     } else {
                         // this.following is false, so we just followed
-                        this.follow_button.text = "Unfollow"
+                        collapsing_profile_follow_button.text = "Unfollow"
                         this.following = true
                     }
                 },
