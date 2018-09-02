@@ -37,7 +37,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     open lateinit var adapter: TimelineRecyclerAdapter
     open var posts = ArrayList<Post>()
-//    private lateinit var refresh: SwipeRefreshLayout
+    private lateinit var refresh: SwipeRefreshLayout
     var following = false
     lateinit var username: String
 
@@ -52,21 +52,15 @@ class ProfileActivity : AppCompatActivity() {
         profile_recyclerView.adapter = this.adapter
         Log.i("BaseTimeline", "recycler: $profile_recyclerView")
 
-        profile_fab.setOnClickListener {
-            val intent = Intent(this, NewPostActivity::class.java)
-            intent.putExtra("@string/reply_intent_extra_author", this.username)
-            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
-        }
-
-//        this.refresh = profile_refresher
-//        this.refresh.setOnRefreshListener { refresh() }
+        this.refresh = profile_refresher
+        this.refresh.setOnRefreshListener { refresh() }
         initialLoad()
     }
 
     fun initialLoad() {
         this.username = intent.getStringExtra("username")
         this.url = this.url + this.username
-//        this.refresh.isRefreshing = true
+        this.refresh.isRefreshing = true
         refresh()
     }
 
@@ -94,11 +88,11 @@ class ProfileActivity : AppCompatActivity() {
                     createPosts(items)
                     getRequestComplete(response)
                     this.adapter.notifyDataSetChanged()
-//                    this.refresh.isRefreshing = false
+                    this.refresh.isRefreshing = false
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
-//                    this.refresh.isRefreshing = false
+                    this.refresh.isRefreshing = false
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)
@@ -141,6 +135,15 @@ class ProfileActivity : AppCompatActivity() {
         collapsing_profile_follow_button.setOnClickListener { followButtonTapped(this.username) }
         collapsing_toolbar.setCollapsedTitleTextColor(resources.getColor(R.color.colorWhite))
         setToolbarTitle(this.username)
+        setFABListener()
+    }
+
+    fun setFABListener() {
+        profile_fab.setOnClickListener {
+            val intent = Intent(this, NewPostActivity::class.java)
+            intent.putExtra("@string/reply_intent_extra_author", this.username)
+            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+        }
     }
 
     private fun setToolbarTitle(username: String) {
@@ -149,7 +152,6 @@ class ProfileActivity : AppCompatActivity() {
             var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                //Initialize the size of the scroll
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.totalScrollRange
                 }
