@@ -44,9 +44,11 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         recyclerView.adapter = this.adapter
         Log.i("BaseTimeline", "recycler: $recyclerView")
 
-        fab.setOnClickListener {
-            val intent = Intent(this, NewPostActivity::class.java)
-            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+        if (fab != null) {
+            fab.setOnClickListener {
+                val intent = Intent(this, NewPostActivity::class.java)
+                startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+            }
         }
 
         this.refresh = refresher
@@ -54,7 +56,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         initialLoad()
     }
 
-    open fun contentView() : Int {
+    open fun contentView(): Int {
         return R.layout.activity_timeline
     }
 
@@ -78,7 +80,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         }
     }
 
-    fun prefs() : SharedPreferences {
+    fun prefs(): SharedPreferences {
         return getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
     }
 
@@ -88,7 +90,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
                 this.url,
                 null,
                 Response.Listener<JSONObject> { response ->
-//                    Log.i("MainActivity", "resp: $response")
+                    //                    Log.i("MainActivity", "resp: $response")
                     val items = response["items"] as JSONArray
                     createPosts(items)
                     getRequestComplete(response)
