@@ -34,6 +34,7 @@ class NewPostActivity : AppCompatActivity() {
 
     var progress: ProgressDialog? = null
     var replyPostID: Int? = null
+    var imagesUploaded: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,6 +202,8 @@ class NewPostActivity : AppCompatActivity() {
                         Log.i("MainActivity", "Success! Resp: $data")
                         val obj = JSONObject(data)
                         if (obj["url"] != null) {
+                            this.imagesUploaded += 1
+                            sendButton.isEnabled = true
                             val imgURL = obj["url"] as String
                             editText.append("\n\n![]($imgURL)")
                             this.progress?.hide()
