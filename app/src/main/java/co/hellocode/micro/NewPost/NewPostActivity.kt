@@ -11,10 +11,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import co.hellocode.micro.Extensions.onChange
 import co.hellocode.micro.R
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
@@ -37,6 +39,7 @@ class NewPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
         setSupportActionBar(toolbar)
+        sendButton.isEnabled = false
 
         // Report that the user started a new post, so the new post shortcut gets shown to them by the OS
         val mgr = this.getSystemService(ShortcutManager::class.java)
@@ -71,6 +74,10 @@ class NewPostActivity : AppCompatActivity() {
         }
 
         editText.requestFocus()
+        editText.onChange {
+            Log.i("NewPost", "text changed to: $it")
+            sendButton.isEnabled = it.isNotEmpty()
+        }
 
         // Open the user's photo gallery app to let them choose an image
         photoButton.setOnClickListener {
