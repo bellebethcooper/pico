@@ -1,6 +1,7 @@
 package co.hellocode.micro
 
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.text.method.LinkMovementMethod
@@ -96,6 +97,8 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             }
             // and remove user avatar image
             view.avatar.setImageDrawable(null)
+
+            view.setBackgroundColor(Color.WHITE)
 
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)

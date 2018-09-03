@@ -42,7 +42,6 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         recyclerView.layoutManager = this.linearLayoutManager
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
-        Log.i("BaseTimeline", "recycler: $recyclerView")
 
         if (fab != null) {
             fab.setOnClickListener {
