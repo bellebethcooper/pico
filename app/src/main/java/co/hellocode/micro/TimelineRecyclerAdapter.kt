@@ -98,8 +98,6 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             // and remove user avatar image
             view.avatar.setImageDrawable(null)
 
-            view.setBackgroundColor(Color.WHITE)
-
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
 //            view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
