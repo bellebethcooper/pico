@@ -52,7 +52,7 @@ class NewPostActivity : AppCompatActivity() {
         if (author != null) {
             // this must be a reply, because we have an author to reply to
             val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
-            if (postID != null) {
+            if (postID != 0) {
                 // postID could still be null, because there's a reply action on profile pages
                 // that lets the user "reply" to the person whose profile they're looking at
                 // but not to any particular post of theirs
@@ -66,6 +66,7 @@ class NewPostActivity : AppCompatActivity() {
                     startText += "$mention "
                 }
             }
+            Log.i("NewPost", "id: ${this.replyPostID}")
             editText.setText(startText)
         }
 
