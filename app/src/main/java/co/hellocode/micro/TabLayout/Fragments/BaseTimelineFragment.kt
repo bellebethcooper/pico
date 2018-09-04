@@ -42,10 +42,6 @@ open class BaseTimelineFragment: Fragment() {
         view.recyclerView.adapter = this.adapter
         this.refresh = view.refresher
         this.refresh.setOnRefreshListener { refresh() }
-        view.fab.setOnClickListener {
-            val intent = Intent(this.activity, NewPostActivity::class.java)
-            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
-        }
         return view
     }
 

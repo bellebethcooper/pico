@@ -1,6 +1,7 @@
 package co.hellocode.micro
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -8,7 +9,9 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import co.hellocode.micro.NewPost.NewPostActivity
 import co.hellocode.micro.TabLayout.TabAdapter
+import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         val adapter = TabAdapter(supportFragmentManager)
         view_pager.adapter = adapter
         view_pager.offscreenPageLimit = 4
+
+        fab.setOnClickListener {
+            val intent = Intent(this, NewPostActivity::class.java)
+            startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+        }
+
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

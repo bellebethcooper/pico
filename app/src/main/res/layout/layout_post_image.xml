@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:paddingTop="8dp"
     android:paddingBottom="5dp"
-    android:scaleType="center"
+    android:scaleType="fitCenter"
+    android:adjustViewBounds="true"
     android:contentDescription="Post image">
 
 </ImageView>
