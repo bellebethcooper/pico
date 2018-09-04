@@ -80,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="@color/colorAccent"
+                android:background="@drawable/custom_button"
+                android:letterSpacing="0.1"
                 android:text="Send"
                 android:textColor="#ffffff" />
         </RelativeLayout>

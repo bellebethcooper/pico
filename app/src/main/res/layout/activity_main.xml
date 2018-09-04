@@ -43,4 +43,19 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/view_pager"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@android:color/black"
+        android:elevation="4dp"
+        android:foregroundTint="@android:color/black"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/black"
+        app:layout_behavior="co.hellocode.micro.ScrollAwareFabBehavior"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
 </android.support.design.widget.CoordinatorLayout>

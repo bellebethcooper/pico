@@ -34,6 +34,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     open var title = "Timeline"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("BaseTimeline","oncreate")
         super.onCreate(savedInstanceState)
         setContentView(contentView())
         setSupportActionBar(toolbar)
@@ -42,7 +43,6 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         recyclerView.layoutManager = this.linearLayoutManager
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
-        Log.i("BaseTimeline", "recycler: $recyclerView")
 
         if (fab != null) {
             fab.setOnClickListener {

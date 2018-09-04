@@ -1,6 +1,7 @@
 package co.hellocode.micro
 
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.text.method.LinkMovementMethod

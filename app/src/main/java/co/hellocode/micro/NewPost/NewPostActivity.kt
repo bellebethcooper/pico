@@ -11,10 +11,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import co.hellocode.micro.Extensions.onChange
 import co.hellocode.micro.R
 import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
@@ -32,11 +34,13 @@ class NewPostActivity : AppCompatActivity() {
 
     var progress: ProgressDialog? = null
     var replyPostID: Int? = null
+    var imagesUploaded: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_post)
         setSupportActionBar(toolbar)
+        sendButton.isEnabled = false
 
         // Report that the user started a new post, so the new post shortcut gets shown to them by the OS
         val mgr = this.getSystemService(ShortcutManager::class.java)
@@ -52,7 +56,7 @@ class NewPostActivity : AppCompatActivity() {
         if (author != null) {
             // this must be a reply, because we have an author to reply to
             val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
-            if (postID != null) {
+            if (postID != 0) {
                 // postID could still be null, because there's a reply action on profile pages
                 // that lets the user "reply" to the person whose profile they're looking at
                 // but not to any particular post of theirs
@@ -66,10 +70,15 @@ class NewPostActivity : AppCompatActivity() {
                     startText += "$mention "
                 }
             }
+            Log.i("NewPost", "id: ${this.replyPostID}")
             editText.setText(startText)
         }
 
         editText.requestFocus()
+        editText.onChange {
+            Log.i("NewPost", "text changed to: $it")
+            sendButton.isEnabled = it.isNotEmpty()
+        }
 
         // Open the user's photo gallery app to let them choose an image
         photoButton.setOnClickListener {
@@ -193,6 +202,8 @@ class NewPostActivity : AppCompatActivity() {
                         Log.i("MainActivity", "Success! Resp: $data")
                         val obj = JSONObject(data)
                         if (obj["url"] != null) {
+                            this.imagesUploaded += 1
+                            sendButton.isEnabled = true
                             val imgURL = obj["url"] as String
                             editText.append("\n\n![]($imgURL)")
                             this.progress?.hide()
