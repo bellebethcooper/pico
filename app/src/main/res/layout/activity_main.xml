@@ -55,7 +55,7 @@
         android:foregroundTint="@android:color/black"
         android:tint="@android:color/white"
         app:backgroundTint="@android:color/black"
-        app:layout_behavior="co.hellocode.micro.AppBarBoundFabBehavior"
+        app:layout_behavior="co.hellocode.micro.ScrollAwareFabBehavior"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -14,11 +14,7 @@ import co.hellocode.micro.Utils.FabOffsetter
 
 
 
-
-//class ScrollAwareFabBehaviour(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
-//    private val toolbarHeight = 60
-
-class AppBarBoundFabBehavior(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
+class ScrollAwareFabBehavior(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
 
     override fun layoutDependsOn(parent: CoordinatorLayout, fab: FloatingActionButton, dependency: View): Boolean {
 //        return dependency is AppBarLayout
