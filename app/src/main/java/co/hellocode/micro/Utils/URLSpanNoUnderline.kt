@@ -34,12 +34,15 @@ class URLSpanNoUnderline(p_Url: String, context: Context) : URLSpan(p_Url) {
     override fun onClick(widget: View) {
         val urlText = Html.fromHtml("<font color='#ffffff'>" + this.getURL() + "</font>")
         val url = this.url
-        Snackbar.make(widget, urlText, Snackbar.LENGTH_LONG).setAction(
-                "Open") {
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            widget.context.startActivity(i)
-        }.setActionTextColor(widget.resources.getColor(R.color.colorAccent)).show()
+//        Snackbar.make(widget, urlText, Snackbar.LENGTH_LONG).setAction(
+//                "Open") {
+//            val i = Intent(Intent.ACTION_VIEW)
+//            i.data = Uri.parse(url)
+//            widget.context.startActivity(i)
+//        }.setActionTextColor(widget.resources.getColor(R.color.colorAccent)).show()
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        widget.context.startActivity(i)
 
         //super.onClick(widget);
     }

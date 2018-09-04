@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.text.Spannable
 import android.text.method.TextKeyListener.clear
+import android.view.View
 import co.hellocode.micro.Utils.CustomQuoteSpan
 import co.hellocode.micro.Utils.HtmlTagHandler
 import co.hellocode.micro.Utils.URLSpanNoUnderline
@@ -92,6 +93,7 @@ class Post(val item: JSONObject) {
         newContent = trimTrailingWhitespace(newContent) as Spannable
         newContent = URLSpanNoUnderline.removeUnderlines(newContent, c)
         CustomQuoteSpan.replaceQuoteSpans(newContent, c)
+
 
         return newContent
     }
