@@ -10,7 +10,7 @@ import kotlin.math.log
 
 class ConversationActivity() : BaseTimelineActivity() {
     override var url = "https://micro.blog/posts/conversation?id="
-    override var title = ""
+    override var title = "Conversation"
 
     override fun initialLoad() {
         val id = intent.getIntExtra("postID", 0)
@@ -32,5 +32,9 @@ class ConversationActivity() : BaseTimelineActivity() {
             this.posts.add(Post(item))
         }
         this.posts.reverse()
+    }
+
+    override fun contentView(): Int {
+        return R.layout.activity_conversation
     }
 }

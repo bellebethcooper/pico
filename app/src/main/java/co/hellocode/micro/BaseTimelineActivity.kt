@@ -34,6 +34,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     open var title = "Timeline"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("BaseTimeline","oncreate")
         super.onCreate(savedInstanceState)
         setContentView(contentView())
         setSupportActionBar(toolbar)
