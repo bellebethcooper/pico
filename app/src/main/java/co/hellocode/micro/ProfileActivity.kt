@@ -3,6 +3,7 @@ package co.hellocode.micro
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -60,8 +61,22 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun initialLoad() {
+        if (intent.data != null) {
+            // Tapping a url opened this activity
+            val url = intent.data
+            // Micro.blog profile urls look like this: http://micro.blog/belle
+            // Don't handle urls with /posts/ or /users/ in them, because they're for doing other stuff
+            // This isn't a foolproof way of ensuring this is a user profile url, but it's a start
+            if (url.path != null && !url.path.contains("posts") && !url.path.contains("users")) {
+                this.username = url.path.drop(1)
+                this.url += this.username
+            }
+        } else {
+            // Tapping a user's avatar opened the activty
         this.username = intent.getStringExtra("username")
         this.url = this.url + this.username
+        }
+
         this.refresh.isRefreshing = true
         refresh()
     }

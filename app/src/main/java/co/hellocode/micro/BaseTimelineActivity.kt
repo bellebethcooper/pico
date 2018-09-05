@@ -44,12 +44,13 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         this.adapter = TimelineRecyclerAdapter(this.posts)
         recyclerView.adapter = this.adapter
 
-        if (fab != null) {
-            fab.setOnClickListener {
-                val intent = Intent(this, NewPostActivity::class.java)
-                startActivityForResult(intent, NEW_POST_REQUEST_CODE)
-            }
-        }
+//        if (fab != null) {
+//
+//            fab.setOnClickListener {
+//                val intent = Intent(this, NewPostActivity::class.java)
+//                startActivityForResult(intent, NEW_POST_REQUEST_CODE)
+//            }
+//        }
 
         this.refresh = refresher
         this.refresh.setOnRefreshListener { refresh() }
