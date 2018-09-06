@@ -1,6 +1,6 @@
 # Pico: A tiny Micro.blog write-only client for Android
 
-This project is extremely early! I threw it together just so I'd have a way to post to Micro.blog from my Android phone.
+This project is extremely early! I threw it together just so I'd have a way to post to Micro.blog from my Android phone. The project used the MIT license and requires Android version 7.1 or later.
 
 Feel free to fork it or submit PRs, or just to try it out yourself.
 
