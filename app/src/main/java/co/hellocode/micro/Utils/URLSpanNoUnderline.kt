@@ -10,7 +10,9 @@ import android.text.Spannable
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.URLSpan
+import android.util.Log
 import android.view.View
+import co.hellocode.micro.ProfileActivity
 import co.hellocode.micro.R
 
 
@@ -40,9 +42,20 @@ class URLSpanNoUnderline(p_Url: String, context: Context) : URLSpan(p_Url) {
 //            i.data = Uri.parse(url)
 //            widget.context.startActivity(i)
 //        }.setActionTextColor(widget.resources.getColor(R.color.colorAccent)).show()
-        val i = Intent(Intent.ACTION_VIEW)
-        i.data = Uri.parse(url)
-        widget.context.startActivity(i)
+        val data = Uri.parse(url)
+        Log.i("URLSpanNoUnderline", "url: $data")
+        if (data.host == "micro.blog" && !data.path.contains("/posts") && !data.path.contains("/discover")) {
+            // This is probably a username, so try to open the profile activity
+            val intent = Intent(this.context, ProfileActivity::class.java)
+            val username = data.path.drop(1)
+            intent.putExtra("username", username)
+            this.context.startActivity(intent)
+        } else {
+            // Normal link
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = data
+            widget.context.startActivity(i)
+        }
 
         //super.onClick(widget);
     }
