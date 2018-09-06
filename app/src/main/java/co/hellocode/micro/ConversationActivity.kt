@@ -31,7 +31,7 @@ class ConversationActivity() : BaseTimelineActivity() {
     private var postID: Int = 0
 
     override fun initialLoad() {
-        this.postID = intent.getIntExtra("postID", 0)
+        this.postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
         this.url = this.url + postID.toString()
         super.initialLoad()
     }
@@ -48,7 +48,7 @@ class ConversationActivity() : BaseTimelineActivity() {
         // set up start text for reply box
         val author = intent.getStringExtra("@string/reply_intent_extra_author")
         this.startText += author
-        val mentions = intent.getStringArrayListExtra("mentions")
+        val mentions = intent.getStringArrayListExtra("@string/reply_intent_extra_mentions")
         if (mentions != null) {
             for (mention in mentions) {
                 this.startText += "$mention "

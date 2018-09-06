@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -16,9 +17,11 @@ import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_profile_collapsing.*
 import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -35,7 +38,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     open var title = "Timeline"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("BaseTimeline","oncreate")
+        Log.d("BaseTimeline", "oncreate")
         super.onCreate(savedInstanceState)
         setContentView(contentView())
         setSupportActionBar(toolbar)
@@ -62,7 +65,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         return R.layout.activity_timeline
     }
 
-    open fun recycler() : RecyclerView {
+    open fun recycler(): RecyclerView {
         return recyclerView
     }
 
@@ -105,7 +108,12 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
-                    this.refresh.isRefreshing = false
+                    if (error is TimeoutError) {
+                        Snackbar.make(this.refresh, "Request timed out; trying again", Snackbar.LENGTH_SHORT)
+                        this.getTimeline()
+                    } else {
+                        this.refresh.isRefreshing = false
+                    }
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)

@@ -47,6 +47,13 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
                 newPostIntent(it)
                 true
             }
+            v.itemText.setOnLongClickListener {
+                if (post == null) {
+                    return@setOnLongClickListener false
+                }
+                newPostIntent(it)
+                true
+            }
             v.avatar.setOnClickListener {
                 avatarClick(it)
             }
@@ -69,24 +76,21 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
 
         private fun newPostIntent(view: View) {
             val intent = Intent(view.context, NewPostActivity::class.java)
-            post = post
-            var id = post?.ID
-            Log.i("Recycler", "id: $id")
-            intent.putExtra("@string/reply_intent_extra_postID", post?.ID)
-            intent.putExtra("@string/reply_intent_extra_author", post?.username)
-            if (post?.mentions != null) {
-                intent.putStringArrayListExtra("mentions", post?.mentions)
+            intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
+            intent.putExtra("@string/reply_intent_extra_author", this.post?.username)
+            if (this.post?.mentions != null) {
+                intent.putStringArrayListExtra("@string/reply_intent_extra_mentions", this.post?.mentions)
             }
             view.context.startActivity(intent)
         }
 
         private fun postDetailIntent(view: View) {
-            Log.i("Recycler", "postDetailIntent")
             val intent = Intent(view.context, ConversationActivity::class.java)
-            this.post = post
-            var id = post?.ID
-            Log.i("Recycler postDetailIntent", "id: $id")
-            intent.putExtra("postID", post?.ID)
+            intent.putExtra("postID", this.post?.ID)
+            intent.putExtra("@string/reply_intent_extra_author", this.post?.authorName)
+            if (this.post?.mentions != null) {
+                intent.putStringArrayListExtra("@string/reply_intent_extra_mentions", this.post?.mentions)
+            }
             view.context.startActivity(intent)
         }
 
