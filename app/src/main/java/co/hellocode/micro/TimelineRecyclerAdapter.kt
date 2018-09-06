@@ -17,6 +17,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.layout_post_image.view.*
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
+
 open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TimelineRecyclerAdapter.PostHolder {
@@ -119,7 +120,10 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
 
             view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, post.date.time)
 
-            Picasso.get().load(post.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
+            val picasso = Picasso.get()
+//            picasso.setIndicatorsEnabled(true) // Uncomment this line to see coloured corners on images, indicating where they're loading from
+            // Red = network, blue = disk, green = memory
+            picasso.load(post.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
 
             for (i in post.imageSources) {
                 val imageView = LayoutInflater.from(view.context).inflate(
@@ -128,7 +132,7 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
                         false
                 )
                 view.post_layout.addView(imageView)
-                Picasso.get().load(i).into(imageView.post_image)
+                picasso.load(i).into(imageView.post_image)
             }
         }
 
