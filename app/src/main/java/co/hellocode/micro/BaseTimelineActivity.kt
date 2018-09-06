@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import co.hellocode.micro.NewPost.NewPostActivity
 import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
@@ -40,9 +41,10 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
         this.linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = this.linearLayoutManager
+        val recycler = recycler()
+        recycler.layoutManager = this.linearLayoutManager
         this.adapter = TimelineRecyclerAdapter(this.posts)
-        recyclerView.adapter = this.adapter
+        recycler.adapter = this.adapter
 
         if (fab != null) {
             fab.setOnClickListener {
@@ -58,6 +60,10 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
 
     open fun contentView(): Int {
         return R.layout.activity_timeline
+    }
+
+    open fun recycler() : RecyclerView {
+        return recyclerView
     }
 
     open fun initialLoad() {

@@ -40,7 +40,7 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/conversation_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite"
@@ -57,16 +57,36 @@
             android:layout_gravity="bottom"
             android:background="@color/colorWhite">
 
-            <EditText
-                android:id="@+id/reply_view"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_gravity="bottom"
-                android:layout_margin="4dp"
-                android:inputType="textMultiLine|textCapSentences|textAutoComplete"
-                android:background="@drawable/reply_edit_text"
-                android:padding="8dp"
-                android:hint="Reply..."/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/reply_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="4dp"
+                    android:inputType="textMultiLine|textCapSentences|textAutoComplete"
+                    android:background="@drawable/reply_edit_text"
+                    android:padding="8dp"
+                    android:layout_weight="1"
+                    android:hint="Reply..."/>
+
+                <ImageView
+                    android:id="@+id/reply_button"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reply"
+                    android:background="@drawable/custom_button"
+                    android:tint="@color/colorWhite"
+                    android:contentDescription="reply button"/>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
