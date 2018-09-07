@@ -13,6 +13,8 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 3. Run Pico and you should see a dialog asking for your app token (if you don't, please let me know!)
 4. Paste in your app token and tap "Save"
 
-## To do:
+## Get involved
 
-See the issues for an up-to-date list of things-to-do!
+- Chat to me on Micro.blog about Pico! I'm @belle
+- Visit our [public roadmap](https://changemap.co/hellocode/pico/) to see what's planned, what's in-progress, and to suggest and vote for features you'd like to see in Pico
+- Take a look at the issues here on GitHub to contribute to the source
