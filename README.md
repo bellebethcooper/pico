@@ -15,6 +15,6 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 
 ## Get involved
 
-- Chat to me on Micro.blog about Pico! I'm @belle
+- Chat to me on Micro.blog about Pico! I'm [@belle](http://micro.blog/belle)
 - Visit our [public roadmap](https://changemap.co/hellocode/pico/) to see what's planned, what's in-progress, and to suggest and vote for features you'd like to see in Pico
 - Take a look at the issues here on GitHub to contribute to the source
