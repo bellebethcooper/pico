@@ -94,7 +94,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     }
 
     private fun getTimeline() {
-        Log.i("BaseTimeline", "getTimeline")
+        Log.i("BaseTimeline", "getTimeline: ${this.url}")
         val rq = object : JsonObjectRequest(
                 this.url,
                 null,
@@ -107,7 +107,10 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
                     this.refresh.isRefreshing = false
                 },
                 Response.ErrorListener { error ->
-                    Log.i("MainActivity", "err: $error msg: ${error.message}")
+                    Log.i("BaseTimelineAct", "err: $error msg: ${error.message}")
+                    if (error.networkResponse != null) {
+                        Log.i("BaseTimelineAct", "err: $error network resp: ${error.networkResponse}")
+                    }
                     if (error is TimeoutError) {
                         Snackbar.make(this.refresh, "Request timed out; trying again", Snackbar.LENGTH_SHORT)
                         this.getTimeline()

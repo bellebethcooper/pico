@@ -47,7 +47,7 @@ class ConversationActivity() : BaseTimelineActivity() {
 
         // set up start text for reply box
         val author = intent.getStringExtra("@string/reply_intent_extra_author")
-        this.startText += author
+        this.startText += "@$author "
         val mentions = intent.getStringArrayListExtra("@string/reply_intent_extra_mentions")
         if (mentions != null) {
             for (mention in mentions) {
