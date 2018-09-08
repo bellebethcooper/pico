@@ -9,10 +9,10 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import co.hellocode.micro.NewPost.NewPostActivity
-import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
-import co.hellocode.micro.Utils.PREFS_FILENAME
-import co.hellocode.micro.Utils.TOKEN
+import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.utils.NEW_POST_REQUEST_CODE
+import co.hellocode.micro.utils.PREFS_FILENAME
+import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest

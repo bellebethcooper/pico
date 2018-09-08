@@ -3,21 +3,15 @@ package co.hellocode.micro
 import android.content.Context
 import android.text.Html
 import android.text.Spanned
-import android.text.style.ImageSpan
 import android.util.Log
-import com.squareup.picasso.Picasso
-import net.nightwhistler.htmlspanner.HtmlSpanner
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import android.text.Spannable
-import android.text.method.TextKeyListener.clear
-import android.view.View
-import co.hellocode.micro.Utils.CustomQuoteSpan
-import co.hellocode.micro.Utils.HtmlTagHandler
-import co.hellocode.micro.Utils.URLSpanNoUnderline
+import co.hellocode.micro.utils.CustomQuoteSpan
+import co.hellocode.micro.utils.HtmlTagHandler
+import co.hellocode.micro.utils.URLSpanNoUnderline
 import java.util.regex.Pattern
-import java.util.regex.Pattern.DOTALL
 import kotlin.collections.ArrayList
 
 

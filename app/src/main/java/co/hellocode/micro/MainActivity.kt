@@ -9,11 +9,11 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import co.hellocode.micro.NewPost.NewPostActivity
-import co.hellocode.micro.TabLayout.TabAdapter
-import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
-import co.hellocode.micro.Utils.PREFS_FILENAME
-import co.hellocode.micro.Utils.TOKEN
+import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.tablayout.TabAdapter
+import co.hellocode.micro.utils.NEW_POST_REQUEST_CODE
+import co.hellocode.micro.utils.PREFS_FILENAME
+import co.hellocode.micro.utils.TOKEN
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

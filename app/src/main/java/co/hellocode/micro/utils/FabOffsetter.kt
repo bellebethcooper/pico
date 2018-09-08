@@ -1,13 +1,7 @@
-package co.hellocode.micro.Utils
+package co.hellocode.micro.utils
 
-import co.hellocode.micro.R.id.fab
-import android.support.design.widget.AppBarLayout.OnOffsetChangedListener
-import android.support.v4.view.ViewCompat.getTranslationY
-import android.support.v4.view.ViewCompat.setTranslationY
-import android.opengl.ETC1.getHeight
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.annotation.NonNull
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.Toolbar
 import co.hellocode.micro.R

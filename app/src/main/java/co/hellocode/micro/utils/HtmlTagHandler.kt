@@ -1,23 +1,19 @@
-package co.hellocode.micro.Utils
+package co.hellocode.micro.utils
 
 import android.content.Context
 import android.text.Editable
 import android.text.Html
 import android.text.Spannable
-import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
-import android.text.style.ImageSpan
 import android.text.style.LeadingMarginSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.TypefaceSpan
 import android.util.Log
 
-import org.xml.sax.SAXException
 import org.xml.sax.XMLReader
 
-import java.io.IOException
 import java.util.Vector
 
 /**

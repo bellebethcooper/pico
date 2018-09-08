@@ -1,4 +1,4 @@
-package co.hellocode.micro.NewPost
+package co.hellocode.micro.newpost
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -11,15 +11,14 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import co.hellocode.micro.Extensions.onChange
+import co.hellocode.micro.extensions.onChange
 import co.hellocode.micro.R
-import co.hellocode.micro.Utils.PREFS_FILENAME
-import co.hellocode.micro.Utils.TOKEN
+import co.hellocode.micro.utils.PREFS_FILENAME
+import co.hellocode.micro.utils.TOKEN
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley

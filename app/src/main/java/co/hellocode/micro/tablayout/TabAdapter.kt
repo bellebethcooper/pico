@@ -1,12 +1,12 @@
-package co.hellocode.micro.TabLayout
+package co.hellocode.micro.tablayout
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import co.hellocode.micro.TabLayout.Fragments.DiscoverFragment
-import co.hellocode.micro.TabLayout.Fragments.MediaFragment
-import co.hellocode.micro.TabLayout.Fragments.MentionsFragment
-import co.hellocode.micro.TabLayout.Fragments.TimelineFragment
+import co.hellocode.micro.tablayout.fragments.DiscoverFragment
+import co.hellocode.micro.tablayout.fragments.MediaFragment
+import co.hellocode.micro.tablayout.fragments.MentionsFragment
+import co.hellocode.micro.tablayout.fragments.TimelineFragment
 
 class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
