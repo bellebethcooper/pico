@@ -1,12 +1,6 @@
 package co.hellocode.micro.services
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.support.design.widget.Snackbar
-import android.util.Log
-import android.view.View
-import co.hellocode.micro.Post
 import co.hellocode.micro.utils.PREFS_FILENAME
 import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError
@@ -117,6 +111,9 @@ class APIService {
                 return headers
             }
         }
+        // set timeout to zero so Volley won't send multiple of the same request
+        // seems like a Volley bug: https://groups.google.com/forum/#!topic/volley-users/8PE9dBbD6iA
+        rq.retryPolicy = DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         val queue = Volley.newRequestQueue(context)
         queue.add(rq)
     }
@@ -142,6 +139,9 @@ class APIService {
                 return params
             }
         }
+        // set timeout to zero so Volley won't send multiple of the same request
+        // seems like a Volley bug: https://groups.google.com/forum/#!topic/volley-users/8PE9dBbD6iA
+        rq.retryPolicy = DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         val queue = Volley.newRequestQueue(context)
         queue.add(rq)
     }
