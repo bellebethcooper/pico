@@ -79,7 +79,8 @@ class ConversationActivity() : BaseTimelineActivity() {
     }
 
     private fun submitPost(view: View) {
-        // TODO: Add some indicator like a spinner
+        spinner.visibility = View.VISIBLE
+        reply_button.visibility = View.GONE
 
         val text = reply_view.text.toString()
         val queue = Volley.newRequestQueue(this)
@@ -98,15 +99,15 @@ class ConversationActivity() : BaseTimelineActivity() {
                 Response.Listener<String> { response ->
                     Log.i("MainActivity", "resp: $response")
                     Snackbar.make(view, "Success!", Snackbar.LENGTH_LONG).show()
-                    editText.setText("")
-                    val intent = Intent()
-                    setResult(Activity.RESULT_OK, intent)
-                    this.finish()
+                    reply_view.setText("")
+                    spinner.visibility = View.GONE
+                    reply_button.visibility = View.VISIBLE
                 },
                 Response.ErrorListener { error ->
                     Log.i("MainActivity", "err: $error msg: ${error.message}")
                     Snackbar.make(view, "Error: $error", Snackbar.LENGTH_LONG).show()
-                    // TODO: Handle error
+                    spinner.visibility = View.GONE
+                    reply_button.visibility = View.VISIBLE
                 }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {

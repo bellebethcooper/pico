@@ -53,37 +53,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="bottom"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/reply_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_gravity="bottom"
-                    android:layout_margin="4dp"
-                    android:inputType="textMultiLine|textCapSentences|textAutoComplete"
-                    android:background="@drawable/reply_edit_text"
-                    android:padding="8dp"
-                    android:layout_weight="1"
-                    android:hint="Reply..."/>
-
-                <ImageView
-                    android:id="@+id/reply_button"
+                <FrameLayout
+                    android:id="@+id/reply_button_view"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="8dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/reply"
-                    android:background="@drawable/custom_button"
-                    android:tint="@color/colorWhite"
-                    android:contentDescription="reply button"/>
+                    android:layout_marginEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/reply_button"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/custom_button"
+                        android:contentDescription="@string/reply_button_description"
+                        android:src="@drawable/reply"
+                        android:tint="@color/colorWhite" />
+
+                    <ProgressBar
+                        android:id="@+id/spinner"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:tint="@color/colorWhite"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+                <EditText
+                    android:id="@+id/reply_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="4dp"
+                    android:layout_toStartOf="@id/reply_button_view"
+                    android:background="@drawable/reply_edit_text"
+                    android:hint="@string/reply_placeholder"
+                    android:inputType="textMultiLine|textCapSentences|textAutoComplete"
+                    android:maxLines="3"
+                    android:lines="3"
+                    android:minLines="1"
+                    android:padding="8dp" />
 
             </RelativeLayout>
 
