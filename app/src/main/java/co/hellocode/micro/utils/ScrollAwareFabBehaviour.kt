@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.utils
 
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
