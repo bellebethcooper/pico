@@ -74,7 +74,7 @@
                 android:layout_gravity="top|start"
                 android:layout_marginTop="2dp"
                 android:background="@android:color/white"
-                android:text="The text for the item will go here."
+                android:text="The text for the media item will go here."
                 android:textColor="@color/colorGreyDark"
                 android:textSize="18dp" />
 

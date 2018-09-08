@@ -27,7 +27,7 @@ open class BaseTimelineFragment: Fragment() {
     open var url = "https://micro.blog/posts/all"
     open var title = "Timeline"
     open lateinit var linearLayoutManager: LinearLayoutManager
-    open lateinit var adapter: TimelineRecyclerAdapter
+    open lateinit var adapter: BaseRecyclerAdapter<Post>
     open var posts = ArrayList<Post>()
     open lateinit var refresh: SwipeRefreshLayout
 
@@ -35,7 +35,7 @@ open class BaseTimelineFragment: Fragment() {
         val view = inflater.inflate(R.layout.baselayout_timeline, container, false)
         this.linearLayoutManager = LinearLayoutManager(context)
         view.recyclerView.layoutManager = this.linearLayoutManager
-        this.adapter = TimelineRecyclerAdapter(this.posts)
+        this.adapter = BaseRecyclerAdapter({ PostViewHolder(container!!, true) }, this.posts)
         view.recyclerView.adapter = this.adapter
         this.refresh = view.refresher
         this.refresh.setOnRefreshListener { refresh() }

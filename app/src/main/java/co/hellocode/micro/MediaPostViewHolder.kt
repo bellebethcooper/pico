@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.utils.inflate
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.layout_post_image.view.*
@@ -18,10 +19,11 @@ import kotlinx.android.synthetic.main.timeline_media_item.view.*
 class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
     : BaseViewHolder<Post>(parent, R.layout.timeline_media_item) {
 
-    private var view: ViewGroup = parent
+    private var view: View = parent.inflate(R.layout.timeline_media_item, false)
     private var post: Post? = null
 
     init {
+        Log.i("MediaPostVH", "init")
         if (this.canShowConversations) {
             view.setOnClickListener {
                 postDetailIntent(it)
@@ -34,7 +36,7 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
             newPostIntent(it)
             true
         }
-        view.avatar.setOnClickListener {
+        view.media_post_avatar.setOnClickListener {
             avatarClick(it)
         }
     }
@@ -65,6 +67,7 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
     }
 
     override fun bindItem(item: Post) {
+        Log.i("MediaPostVH", "bindItem")
 
         // remove any image views leftover from reusing views
         for (i in 0 until view.media_outer_layout.childCount) {
@@ -74,30 +77,30 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
             }
         }
         // and remove user avatar image
-        view.avatar.setImageDrawable(null)
+        view.media_post_avatar.setImageDrawable(null)
 
-        view.itemText.setOnClickListener { v ->
+        view.media_post_itemText.setOnClickListener { v ->
             if (this.canShowConversations) {
                 postDetailIntent(v)
             }
         }
 
-        view.itemText.text = item.getParsedContent(view.context)
-        view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
-        view.author.text = item.authorName
-        view.username.text = "@${item.username}"
+        view.media_post_itemText.text = item.getParsedContent(view.context)
+        view.media_post_itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
+        view.media_post_author.text = item.authorName
+        view.media_post_username.text = "@${item.username}"
         if (!item.isConversation) {
-            view.conversationButton.visibility = View.GONE
+            view.media_post_conversationButton.visibility = View.GONE
         } else {
-            view.conversationButton.visibility = View.VISIBLE
+            view.media_post_conversationButton.visibility = View.VISIBLE
         }
 
-        view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, item.date.time)
+        view.media_post_timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, item.date.time)
 
         val picasso = Picasso.get()
 //            picasso.setIndicatorsEnabled(true) // Uncomment this line to see coloured corners on images, indicating where they're loading from
         // Red = network, blue = disk, green = memory
-        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
+        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(view.media_post_avatar)
 
         for (i in item.imageSources) {
             val imageView = LayoutInflater.from(view.context).inflate(

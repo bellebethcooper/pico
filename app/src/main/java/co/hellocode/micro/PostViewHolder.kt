@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.utils.inflate
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.layout_post_image.view.*
@@ -17,10 +18,11 @@ import kotlinx.android.synthetic.main.timeline_item.view.*
 class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
     : BaseViewHolder<Post>(parent, R.layout.timeline_item) {
 
-    private var view: ViewGroup = parent
+    private var view: View = parent.inflate(R.layout.timeline_item, false)
     private var post: Post? = null
 
     init {
+        Log.i("PostViewHolder", "init")
         if (this.canShowConversations) {
             view.setOnClickListener {
                 postDetailIntent(it)
@@ -64,7 +66,7 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
     }
 
     override fun bindItem(item: Post) {
-
+        Log.i("PostViewHolder", "bindItem")
         // remove any image views leftover from reusing views
         for (i in 0 until view.post_layout.childCount) {
             val v = view.post_layout.getChildAt(i)
