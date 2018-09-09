@@ -23,13 +23,23 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
     private var post: Post? = null
 
     init {
-        Log.i("MediaPostVH", "init")
+        Log.i("MediaPostVH", "init view: ${this.view}")
         if (this.canShowConversations) {
             view.setOnClickListener {
                 postDetailIntent(it)
             }
+            view.media_post_itemText.setOnClickListener {
+                postDetailIntent(it)
+            }
         }
         view.setOnLongClickListener {
+            if (post == null) {
+                return@setOnLongClickListener false
+            }
+            newPostIntent(it)
+            true
+        }
+        view.media_post_itemText.setOnLongClickListener {
             if (post == null) {
                 return@setOnLongClickListener false
             }
@@ -67,7 +77,6 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
     }
 
     override fun bindItem(item: Post) {
-        Log.i("MediaPostVH", "bindItem")
 
         // remove any image views leftover from reusing views
         for (i in 0 until view.media_outer_layout.childCount) {
