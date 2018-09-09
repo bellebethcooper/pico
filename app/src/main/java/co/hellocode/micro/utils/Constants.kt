@@ -1,4 +1,4 @@
-package co.hellocode.micro.Utils
+package co.hellocode.micro.utils
 
 const val PREFS_FILENAME = "co.hellocode.micro.prefs"
 const val TOKEN = "token"

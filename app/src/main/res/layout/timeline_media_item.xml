@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/media_outer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingTop="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingBottom="5dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="8dp"
+        >
+
+        <ImageButton
+            android:id="@+id/media_post_avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="Author avatar"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/media_post_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/media_post_avatar"
+            android:layout_centerVertical="true"
+            android:text="author"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/media_post_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/media_post_author"
+            android:layout_centerVertical="true"
+            android:paddingStart="5dp"
+            android:textColor="@color/colorGreyMid" />
+
+        <TextView
+            android:id="@+id/media_post_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="5dp"
+            android:paddingEnd="0dp"
+            android:textColor="@color/colorGreyMid"
+            android:textSize="12dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/media_post_itemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        android:paddingBottom="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:text="The text for the media item will go here."
+        android:textColor="@color/colorGreyDark"
+        android:textSize="18dp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGreyLight" />
+</LinearLayout>

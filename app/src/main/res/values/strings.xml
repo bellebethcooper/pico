@@ -9,4 +9,5 @@
     <string name="new_post_shortcut_long_label">Create a new post</string>
     <string name="reply_placeholder">Reply...</string>
     <string name="reply_button_description">reply button</string>
+    <string name="conversation_button_description">conversation button</string>
 </resources>

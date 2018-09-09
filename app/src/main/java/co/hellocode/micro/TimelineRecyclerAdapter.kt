@@ -1,7 +1,6 @@
 package co.hellocode.micro
 
 import android.content.Intent
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateUtils
 import android.text.method.LinkMovementMethod
@@ -10,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import co.hellocode.micro.NewPost.NewPostActivity
-import co.hellocode.micro.Utils.inflate
+import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.utils.inflate
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.layout_post_image.view.*

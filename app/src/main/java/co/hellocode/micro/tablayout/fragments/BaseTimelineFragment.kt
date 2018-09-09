@@ -1,7 +1,6 @@
-package co.hellocode.micro.TabLayout.Fragments
+package co.hellocode.micro.tablayout.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,10 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.hellocode.micro.*
-import co.hellocode.micro.NewPost.NewPostActivity
-import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
-import co.hellocode.micro.Utils.PREFS_FILENAME
-import co.hellocode.micro.Utils.TOKEN
+import co.hellocode.micro.utils.PREFS_FILENAME
+import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -30,7 +27,7 @@ open class BaseTimelineFragment: Fragment() {
     open var url = "https://micro.blog/posts/all"
     open var title = "Timeline"
     open lateinit var linearLayoutManager: LinearLayoutManager
-    open lateinit var adapter: TimelineRecyclerAdapter
+    open lateinit var adapter: BaseRecyclerAdapter<Post>
     open var posts = ArrayList<Post>()
     open lateinit var refresh: SwipeRefreshLayout
 
@@ -38,7 +35,7 @@ open class BaseTimelineFragment: Fragment() {
         val view = inflater.inflate(R.layout.baselayout_timeline, container, false)
         this.linearLayoutManager = LinearLayoutManager(context)
         view.recyclerView.layoutManager = this.linearLayoutManager
-        this.adapter = TimelineRecyclerAdapter(this.posts)
+        this.adapter = BaseRecyclerAdapter({ PostViewHolder(it, true) }, this.posts)
         view.recyclerView.adapter = this.adapter
         this.refresh = view.refresher
         this.refresh.setOnRefreshListener { refresh() }

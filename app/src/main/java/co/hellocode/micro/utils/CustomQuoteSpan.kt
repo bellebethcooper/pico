@@ -1,4 +1,4 @@
-package co.hellocode.micro.Utils
+package co.hellocode.micro.utils
 
 
 import android.content.Context

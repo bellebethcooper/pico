@@ -1,4 +1,4 @@
-package co.hellocode.micro.Extensions
+package co.hellocode.micro.extensions
 
 import android.text.Editable
 import android.text.TextWatcher

@@ -25,7 +25,7 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".NewPost.NewPostActivity"
+            android:name=".newpost.NewPostActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity

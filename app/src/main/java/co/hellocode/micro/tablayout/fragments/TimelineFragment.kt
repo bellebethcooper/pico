@@ -1,4 +1,4 @@
-package co.hellocode.micro.TabLayout.Fragments
+package co.hellocode.micro.tablayout.fragments
 
 class TimelineFragment : BaseTimelineFragment() {
 
