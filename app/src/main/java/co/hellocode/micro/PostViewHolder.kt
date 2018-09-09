@@ -27,8 +27,18 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
             rootView.setOnClickListener {
                 postDetailIntent(it)
             }
+            rootView.itemText.setOnClickListener {
+                postDetailIntent(it)
+            }
         }
         rootView.setOnLongClickListener {
+            if (post == null) {
+                return@setOnLongClickListener false
+            }
+            newPostIntent(it)
+            true
+        }
+        rootView.itemText.setOnLongClickListener {
             if (post == null) {
                 return@setOnLongClickListener false
             }
@@ -61,12 +71,13 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
 
     private fun postDetailIntent(view: View) {
         val intent = Intent(view.context, ConversationActivity::class.java)
-        intent.putExtra("postID", this.post?.ID)
+        intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
         view.context.startActivity(intent)
     }
 
     override fun bindItem(item: Post) {
         Log.i("PostViewHolder", "bindItem")
+        this.post = item
         // remove any image views leftover from reusing views
         for (i in 0 until rootView.post_layout.childCount) {
             val v = rootView.post_layout.getChildAt(i)

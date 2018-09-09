@@ -9,8 +9,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
-import co.hellocode.micro.Utils.PREFS_FILENAME
-import co.hellocode.micro.Utils.TOKEN
+import co.hellocode.micro.utils.PREFS_FILENAME
+import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -32,6 +32,11 @@ class ConversationActivity() : BaseTimelineActivity() {
 
     override fun initialLoad() {
         this.postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
+        Log.i("ConversationAct", "id: ${this.postID}")
+        if (this.postID == 0) {
+            // Don't try to load if the postID couldn't be found and is still the default of zero
+            this.finish()
+        }
         this.url = this.url + postID.toString()
         super.initialLoad()
     }

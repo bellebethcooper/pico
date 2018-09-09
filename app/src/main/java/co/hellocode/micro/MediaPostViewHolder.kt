@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.timeline_media_item.view.*
 class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
     : BaseViewHolder<Post>(parent, R.layout.timeline_media_item) {
 
-    //private var view: View = parent.inflate(R.layout.timeline_media_item, false)
     private var post: Post? = null
 
     init {
@@ -72,12 +71,14 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
 
     private fun postDetailIntent(view: View) {
         val intent = Intent(view.context, ConversationActivity::class.java)
-        intent.putExtra("postID", this.post?.ID)
+        Log.i("MediaPostVH", "postDetailIntent - id: ${this.post?.ID}")
+        intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
         view.context.startActivity(intent)
     }
 
     override fun bindItem(item: Post) {
         Log.i("MediaVH", "bindItem")
+        this.post = item
         // remove any image views leftover from reusing views
         for (i in 0 until rootView.media_outer_layout.childCount) {
             val v = rootView.media_outer_layout.getChildAt(i)
@@ -115,6 +116,11 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
             // using index 1 is going to put multiple images in the wrong order
             // but I'm not sure how to fix that just yet
             rootView.media_outer_layout.addView(imageView, 1)
+            if (this.canShowConversations) {
+                imageView.setOnClickListener {
+                    postDetailIntent(it)
+                }
+            }
             picasso.load(i).into(imageView.post_image)
         }
     }
