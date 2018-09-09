@@ -71,8 +71,11 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
 
     private fun postDetailIntent(view: View) {
         val intent = Intent(view.context, ConversationActivity::class.java)
-        Log.i("MediaPostVH", "postDetailIntent - id: ${this.post?.ID}")
         intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
+        intent.putExtra("@string/reply_intent_extra_author", this.post?.username)
+        if (this.post?.mentions != null) {
+            intent.putStringArrayListExtra("@string/reply_intent_extra_mentions", this.post?.mentions)
+        }
         view.context.startActivity(intent)
     }
 
