@@ -4,6 +4,9 @@
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="reply_intent_extra_postID">postID</string>
     <string name="reply_intent_extra_author">author</string>
+    <string name="reply_intent_extra_mentions">mentions</string>
     <string name="new_post_shortcut_short_label">New post</string>
     <string name="new_post_shortcut_long_label">Create a new post</string>
+    <string name="reply_placeholder">Reply...</string>
+    <string name="reply_button_description">reply button</string>
 </resources>

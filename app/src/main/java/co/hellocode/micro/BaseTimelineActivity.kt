@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import co.hellocode.micro.NewPost.NewPostActivity
 import co.hellocode.micro.Utils.NEW_POST_REQUEST_CODE
@@ -15,9 +17,11 @@ import co.hellocode.micro.Utils.PREFS_FILENAME
 import co.hellocode.micro.Utils.TOKEN
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_profile_collapsing.*
 import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -34,15 +38,16 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     open var title = "Timeline"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("BaseTimeline","oncreate")
+        Log.d("BaseTimeline", "oncreate")
         super.onCreate(savedInstanceState)
         setContentView(contentView())
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
         this.linearLayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = this.linearLayoutManager
+        val recycler = recycler()
+        recycler.layoutManager = this.linearLayoutManager
         this.adapter = TimelineRecyclerAdapter(this.posts)
-        recyclerView.adapter = this.adapter
+        recycler.adapter = this.adapter
 
         if (fab != null) {
             fab.setOnClickListener {
@@ -58,6 +63,10 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
 
     open fun contentView(): Int {
         return R.layout.activity_timeline
+    }
+
+    open fun recycler(): RecyclerView {
+        return recyclerView
     }
 
     open fun initialLoad() {
@@ -85,7 +94,7 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
     }
 
     private fun getTimeline() {
-        Log.i("BaseTimeline", "getTimeline")
+        Log.i("BaseTimeline", "getTimeline: ${this.url}")
         val rq = object : JsonObjectRequest(
                 this.url,
                 null,
@@ -98,8 +107,16 @@ abstract class BaseTimelineActivity : AppCompatActivity() {
                     this.refresh.isRefreshing = false
                 },
                 Response.ErrorListener { error ->
-                    Log.i("MainActivity", "err: $error msg: ${error.message}")
-                    this.refresh.isRefreshing = false
+                    Log.i("BaseTimelineAct", "err: $error msg: ${error.message}")
+                    if (error.networkResponse != null) {
+                        Log.i("BaseTimelineAct", "err: $error network resp: ${error.networkResponse}")
+                    }
+                    if (error is TimeoutError) {
+                        Snackbar.make(this.refresh, "Request timed out; trying again", Snackbar.LENGTH_SHORT)
+                        this.getTimeline()
+                    } else {
+                        this.refresh.isRefreshing = false
+                    }
                     // TODO: Handle error
                 }) {
             @Throws(AuthFailureError::class)
