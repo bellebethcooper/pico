@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import co.hellocode.micro.utils.inflate
 
 abstract class BaseViewHolder<in T>(parent: ViewGroup, layoutRes: Int,
-                                    private val rootView: View = parent.inflate(layoutRes))
+                                    val rootView: View = parent.inflate(layoutRes))
     : RecyclerView.ViewHolder(rootView) {
 
     abstract fun bindItem(item: T)
@@ -18,12 +18,14 @@ class BaseRecyclerAdapter<T>(private val viewHolderFactory: ((parent: ViewGroup)
     : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T> {
+        //return PostViewHolder(parent, true)
         return viewHolderFactory(parent)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         val item = items[position]
         holder.bindItem(item)
+
     }
 
     override fun getItemCount(): Int = items.size

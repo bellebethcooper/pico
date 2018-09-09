@@ -18,24 +18,24 @@ import kotlinx.android.synthetic.main.timeline_item.view.*
 class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
     : BaseViewHolder<Post>(parent, R.layout.timeline_item) {
 
-    private var view: View = parent.inflate(R.layout.timeline_item, false)
+    //private var view: View = parent.inflate(R.layout.timeline_item, false)
     private var post: Post? = null
 
     init {
         Log.i("PostViewHolder", "init")
         if (this.canShowConversations) {
-            view.setOnClickListener {
+            rootView.setOnClickListener {
                 postDetailIntent(it)
             }
         }
-        view.setOnLongClickListener {
+        rootView.setOnLongClickListener {
             if (post == null) {
                 return@setOnLongClickListener false
             }
             newPostIntent(it)
             true
         }
-        view.avatar.setOnClickListener {
+        rootView.avatar.setOnClickListener {
             avatarClick(it)
         }
     }
@@ -68,46 +68,48 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
     override fun bindItem(item: Post) {
         Log.i("PostViewHolder", "bindItem")
         // remove any image views leftover from reusing views
-        for (i in 0 until view.post_layout.childCount) {
-            val v = view.post_layout.getChildAt(i)
+        for (i in 0 until rootView.post_layout.childCount) {
+            val v = rootView.post_layout.getChildAt(i)
             if (v is ImageView) {
-                view.post_layout.removeViewAt(i)
+                rootView.post_layout.removeViewAt(i)
             }
         }
         // and remove user avatar image
-        view.avatar.setImageDrawable(null)
+        rootView.avatar.setImageDrawable(null)
 
-        view.itemText.setOnClickListener { v ->
+        rootView.itemText.setOnClickListener { v ->
             if (this.canShowConversations) {
                 postDetailIntent(v)
             }
         }
 
-        view.itemText.text = item.getParsedContent(view.context)
-        view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
-        view.author.text = item.authorName
-        view.username.text = "@${item.username}"
+        Log.i("PostViewHolder", "${item.content}, ${item.authorName}")
+        rootView.itemText.text = item.getParsedContent(rootView.context)
+        rootView.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
+        rootView.author.text = item.authorName
+        rootView.username.text = "@${item.username}"
         if (!item.isConversation) {
-            view.conversationButton.visibility = View.GONE
+            rootView.conversationButton.visibility = View.GONE
         } else {
-            view.conversationButton.visibility = View.VISIBLE
+            rootView.conversationButton.visibility = View.VISIBLE
         }
 
-        view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, item.date.time)
+        rootView.timestamp.text = DateUtils.getRelativeTimeSpanString(rootView.context, item.date.time)
 
         val picasso = Picasso.get()
 //            picasso.setIndicatorsEnabled(true) // Uncomment this line to see coloured corners on images, indicating where they're loading from
         // Red = network, blue = disk, green = memory
-        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
+        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(rootView.avatar)
 
         for (i in item.imageSources) {
-            val imageView = LayoutInflater.from(view.context).inflate(
+            val imageView = LayoutInflater.from(rootView.context).inflate(
                     R.layout.layout_post_image,
                     null,
                     false
             )
-            view.post_layout.addView(imageView)
+            rootView.post_layout.addView(imageView)
             picasso.load(i).into(imageView.post_image)
         }
+
     }
 }

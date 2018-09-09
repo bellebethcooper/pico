@@ -35,7 +35,7 @@ open class BaseTimelineFragment: Fragment() {
         val view = inflater.inflate(R.layout.baselayout_timeline, container, false)
         this.linearLayoutManager = LinearLayoutManager(context)
         view.recyclerView.layoutManager = this.linearLayoutManager
-        this.adapter = BaseRecyclerAdapter({ PostViewHolder(container!!, true) }, this.posts)
+        this.adapter = BaseRecyclerAdapter({ PostViewHolder(it, true) }, this.posts)
         view.recyclerView.adapter = this.adapter
         this.refresh = view.refresher
         this.refresh.setOnRefreshListener { refresh() }
