@@ -13,16 +13,16 @@ class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment? = when (position) {
         0 -> TimelineFragment.newInstance()
         1 -> MentionsFragment.newInstance()
-        2 -> DiscoverFragment.newInstance()
-        3 -> MediaFragment.newInstance()
+        2 -> MediaFragment.newInstance()
+        3 -> DiscoverFragment.newInstance()
         else -> null
     }
 
     override fun getPageTitle(position: Int): CharSequence = when (position) {
         0 -> "Timeline"
         1 -> "Mentions"
-        2 -> "Discover"
-        3 -> "Photos"
+        2 -> "Photos"
+        3 -> "Discover"
         else -> ""
     }
 
