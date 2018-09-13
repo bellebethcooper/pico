@@ -75,7 +75,6 @@ class NewPostActivity : AppCompatActivity() {
 
         editText.requestFocus()
         editText.onChange {
-            Log.i("NewPost", "text changed to: $it")
             sendButton.isEnabled = it.isNotEmpty()
         }
 

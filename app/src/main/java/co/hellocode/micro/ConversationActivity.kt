@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import co.hellocode.micro.extensions.onChange
 import co.hellocode.micro.services.APIService
 import co.hellocode.micro.services.GetEndpoint
 import co.hellocode.micro.services.PostEndpoint
@@ -49,6 +50,10 @@ class ConversationActivity() : BaseTimelineActivity() {
         this.adapter = TimelineRecyclerAdapter(this.posts, canShowConversations = false)
         conversation_recyclerView.adapter = this.adapter
 
+        reply_button.isEnabled = false
+        reply_view.onChange {
+            reply_button.isEnabled = it.isNotEmpty()
+        }
         reply_button.setOnClickListener {
             submitPost(reply_button)
         }
