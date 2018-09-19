@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.conversation
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import co.hellocode.micro.profile.ProfileActivity
+import co.hellocode.micro.R
+import co.hellocode.micro.models.Post
 import co.hellocode.micro.newpost.NewPostActivity
 import co.hellocode.micro.utils.inflate
 import com.squareup.picasso.Picasso
@@ -19,14 +22,14 @@ import kotlinx.android.synthetic.main.timeline_item.view.*
 
 open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TimelineRecyclerAdapter.PostHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PostHolder {
         val inflatedView = p0.inflate(R.layout.timeline_item, false)
         return PostHolder(inflatedView, canShowConversations)
     }
 
     override fun getItemCount() = posts.size
 
-    override fun onBindViewHolder(p0: TimelineRecyclerAdapter.PostHolder, p1: Int) {
+    override fun onBindViewHolder(p0: PostHolder, p1: Int) {
         val itemPost = posts[p1]
         p0.bindPost(itemPost)
     }
@@ -94,12 +97,19 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
         }
 
         fun bindPost(post: Post) {
+            var images: ArrayList<ImageView> = ArrayList()
+
             // remove any image views leftover from reusing views
             for (i in 0 until view.post_layout.childCount) {
                 val v = view.post_layout.getChildAt(i)
                 if (v is ImageView) {
-                    view.post_layout.removeViewAt(i)
+                    images.add(v)
+                    //view.post_layout.removeViewAt(i)
                 }
+            }
+
+            for (img in images){
+                view.post_layout.removeView(img)
             }
             // and remove user avatar image
             view.avatar.setImageDrawable(null)
@@ -128,6 +138,7 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             // Red = network, blue = disk, green = memory
             picasso.load(post.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
 
+            Log.i("TimelineRecyclerAdapter", "image count: ${post.imageSources.size}")
             for (i in post.imageSources) {
                 val imageView = LayoutInflater.from(view.context).inflate(
                         R.layout.layout_post_image,

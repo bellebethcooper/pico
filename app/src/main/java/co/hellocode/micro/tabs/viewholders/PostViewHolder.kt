@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.tabs.viewholders
 
 import android.content.Intent
 import android.text.format.DateUtils
@@ -8,26 +8,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import co.hellocode.micro.conversation.ConversationActivity
+import co.hellocode.micro.models.Post
+import co.hellocode.micro.profile.ProfileActivity
+import co.hellocode.micro.R
 import co.hellocode.micro.newpost.NewPostActivity
-import co.hellocode.micro.utils.inflate
+import co.hellocode.micro.tabs.recyclers.BaseViewHolder
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.layout_post_image.view.*
 import kotlinx.android.synthetic.main.timeline_item.view.*
-import kotlinx.android.synthetic.main.timeline_media_item.view.*
 
-class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
-    : BaseViewHolder<Post>(parent, R.layout.timeline_media_item) {
+class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
+    : BaseViewHolder<Post>(parent, R.layout.timeline_item) {
 
+    //private var view: View = parent.inflate(R.layout.timeline_item, false)
     private var post: Post? = null
 
     init {
-        Log.i("MediaPostVH", "init")
+        Log.i("PostViewHolder", "init")
         if (this.canShowConversations) {
             rootView.setOnClickListener {
                 postDetailIntent(it)
             }
-            rootView.media_post_itemText.setOnClickListener {
+            rootView.itemText.setOnClickListener {
                 postDetailIntent(it)
             }
         }
@@ -38,14 +42,14 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
             newPostIntent(it)
             true
         }
-        rootView.media_post_itemText.setOnLongClickListener {
+        rootView.itemText.setOnLongClickListener {
             if (post == null) {
                 return@setOnLongClickListener false
             }
             newPostIntent(it)
             true
         }
-        rootView.media_post_avatar.setOnClickListener {
+        rootView.avatar.setOnClickListener {
             avatarClick(it)
         }
     }
@@ -80,51 +84,52 @@ class MediaPostViewHolder(parent: ViewGroup, private var canShowConversations: B
     }
 
     override fun bindItem(item: Post) {
-        Log.i("MediaVH", "bindItem")
+        Log.i("PostViewHolder", "bindItem")
         this.post = item
         // remove any image views leftover from reusing views
-        for (i in 0 until rootView.media_outer_layout.childCount) {
-            val v = rootView.media_outer_layout.getChildAt(i)
+        for (i in 0 until rootView.post_layout.childCount) {
+            val v = rootView.post_layout.getChildAt(i)
             if (v is ImageView) {
-                rootView.media_outer_layout.removeViewAt(i)
+                rootView.post_layout.removeViewAt(i)
             }
         }
         // and remove user avatar image
-        rootView.media_post_avatar.setImageDrawable(null)
+        rootView.avatar.setImageDrawable(null)
 
-        rootView.media_post_itemText.setOnClickListener { v ->
+        rootView.itemText.setOnClickListener { v ->
             if (this.canShowConversations) {
                 postDetailIntent(v)
             }
         }
 
-        rootView.media_post_itemText.text = item.getParsedContent(rootView.context)
-        rootView.media_post_itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
-        rootView.media_post_author.text = item.authorName
-        rootView.media_post_username.text = "@${item.username}"
+        Log.i("PostViewHolder", "${item.content}, ${item.authorName}")
+        rootView.itemText.text = item.getParsedContent(rootView.context)
+        rootView.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
+        rootView.author.text = item.authorName
+        rootView.username.text = "@${item.username}"
+        if (!item.isConversation) {
+            rootView.conversationButton.visibility = View.GONE
+        } else {
+            rootView.conversationButton.visibility = View.VISIBLE
+        }
 
-        rootView.media_post_timestamp.text = DateUtils.getRelativeTimeSpanString(rootView.context, item.date.time)
+        rootView.timestamp.text = DateUtils.getRelativeTimeSpanString(rootView.context, item.date.time)
 
         val picasso = Picasso.get()
 //            picasso.setIndicatorsEnabled(true) // Uncomment this line to see coloured corners on images, indicating where they're loading from
         // Red = network, blue = disk, green = memory
-        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(rootView.media_post_avatar)
+        picasso.load(item.authorAvatarURL).transform(CropCircleTransformation()).into(rootView.avatar)
 
         for (i in item.imageSources) {
+            Log.i("PostViewHolder", "found an image: $i")
             val imageView = LayoutInflater.from(rootView.context).inflate(
                     R.layout.layout_post_image,
                     null,
                     false
             )
-            // using index 1 is going to put multiple images in the wrong order
-            // but I'm not sure how to fix that just yet
-            rootView.media_outer_layout.addView(imageView, 1)
-            if (this.canShowConversations) {
-                imageView.setOnClickListener {
-                    postDetailIntent(it)
-                }
-            }
+            rootView.post_layout.addView(imageView)
             picasso.load(i).into(imageView.post_image)
         }
+
     }
 }

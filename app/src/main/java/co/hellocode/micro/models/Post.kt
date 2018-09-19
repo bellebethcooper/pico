@@ -1,4 +1,4 @@
-package co.hellocode.micro
+package co.hellocode.micro.models
 
 import android.content.Context
 import android.text.Html
@@ -56,14 +56,14 @@ class Post(val item: JSONObject) {
         var parsed = content //.replaceAll("<img .*/>", "");
 
         // find images and store sources to add and download
-        val patt2 = Pattern.compile("<img.*src=\"([^\"]+)\"[^>]*>", Pattern.DOTALL or Pattern.CASE_INSENSITIVE)
+        val patt2 = Pattern.compile("<img\\s*(\\w+=\"([^\"]+)\"[^>]\\s*)*src=\"([^\"]+)\"[^>]*>", Pattern.DOTALL or Pattern.CASE_INSENSITIVE)
         val m2 = patt2.matcher(parsed)
         imageSources.clear()
-
         while (m2.find()) {
             Log.i("image parsing", m2.group(0))
-            imageSources.add(Html.fromHtml(m2.group(1)).toString())
+            imageSources.add(Html.fromHtml(m2.group(3)).toString())
             parsed = parsed.replace(m2.group(0), "")
+
         }
 
         // replace tag links with coloured tags
@@ -73,6 +73,7 @@ class Post(val item: JSONObject) {
 //            Log.i("parsing", m.group(0))
 //            parsed = parsed.replace(m.group(0), "<font color=\"#a05b7f\">#</font>" + m.group(1))
 //        }
+        imageSources.reverse()
 
         var newContent: Spannable
 
