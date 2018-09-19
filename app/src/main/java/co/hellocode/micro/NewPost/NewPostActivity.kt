@@ -7,7 +7,9 @@ import android.content.Intent
 import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -44,53 +46,99 @@ class NewPostActivity : AppCompatActivity() {
         // Report that the user started a new post, so the new post shortcut gets shown to them by the OS
         val mgr = this.getSystemService(ShortcutManager::class.java)
         mgr.reportShortcutUsed("newpost")
-
-        // Check for a post passed by an intent
-        // This will happen if the New Post activity was opened to create a reply
-        // Use the post data passed by the intent to populate the text box
-        // with usernames to reply to, and to store the post ID to send to the API
-        // when submitting the reply
-        val author = intent.getStringExtra("@string/reply_intent_extra_author")
-        Log.i("NewPostAct", "author: $author")
-        if (author != null) {
-            // this must be a reply, because we have an author to reply to
-            val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
-            if (postID != 0) {
-                // postID could still be null, because there's a reply action on profile pages
-                // that lets the user "reply" to the person whose profile they're looking at
-                // but not to any particular post of theirs
-                this.replyPostID = postID
-            }
-            var startText = ""
-            startText += "@$author "
-            val mentions = intent.getStringArrayListExtra("mentions")
-            if (mentions != null) {
-                for (mention in mentions) {
-                    startText += "$mention "
-                }
-            }
-            Log.i("NewPost", "id: ${this.replyPostID}")
-            editText.setText(startText)
-        }
-
+        // grab any data shared from other apps or by user choosing to reply to a post
+        checkForIntentData(intent)
         editText.requestFocus()
+        // set send button to only be enabled if editText has text in it after change
         editText.onChange {
             sendButton.isEnabled = it.isNotEmpty()
         }
 
         // Open the user's photo gallery app to let them choose an image
         photoButton.setOnClickListener {
-            val getIntent = Intent(Intent.ACTION_GET_CONTENT)
-            getIntent.type = "image/*"
-            val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            pickIntent.type = "image/*"
-            val chooserIntent = Intent.createChooser(getIntent, "Select image")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array(1) { pickIntent })
-            startActivityForResult(chooserIntent, PICK_IMAGE)
+            chooseImage()
         }
 
         sendButton.setOnClickListener { view ->
             submitPost(view)
+        }
+    }
+
+    private fun chooseImage() {
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
+        val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickIntent.type = "image/*"
+        val chooserIntent = Intent.createChooser(getIntent, "Select image")
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, Array(1) { pickIntent })
+        startActivityForResult(chooserIntent, PICK_IMAGE)
+    }
+
+    private fun checkForIntentData(intent: Intent) {
+        when {
+            intent?.action == Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    handleSendText(intent) // Handle text being sent
+                } else if (intent.type?.startsWith("image/") == true) {
+                    handleSendImage(intent) // Handle single image being sent
+                }
+            }
+            intent?.action == Intent.ACTION_SEND_MULTIPLE
+                    && intent.type?.startsWith("image/") == true -> {
+                handleSendMultipleImages(intent) // Handle multiple images being sent
+            }
+            else -> {
+                // Check for a post passed by an intent
+                // This will happen if the New Post activity was opened to create a reply
+                // Use the post data passed by the intent to populate the text box
+                // with usernames to reply to, and to store the post ID to send to the API
+                // when submitting the reply
+                val author = intent.getStringExtra("@string/reply_intent_extra_author")
+                Log.i("NewPostAct", "author: $author")
+                if (author != null) {
+                    // this must be a reply, because we have an author to reply to
+                    val postID = intent.getIntExtra("@string/reply_intent_extra_postID", 0)
+                    if (postID != 0) {
+                        // postID could still be null, because there's a reply action on profile pages
+                        // that lets the user "reply" to the person whose profile they're looking at
+                        // but not to any particular post of theirs
+                        this.replyPostID = postID
+                    }
+                    var startText = ""
+                    startText += "@$author "
+                    val mentions = intent.getStringArrayListExtra("mentions")
+                    if (mentions != null) {
+                        for (mention in mentions) {
+                            startText += "$mention "
+                        }
+                    }
+                    Log.i("NewPost", "id: ${this.replyPostID}")
+                    editText.setText(startText)
+                }
+            }
+        }
+    }
+
+    private fun handleSendText(intent: Intent) {
+        val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+        intent.getStringExtra(Intent.EXTRA_SUBJECT)?.let {
+            editText.setText("[$it]($text)")
+            Log.i("NewPostAct", "handleSendText text: $text subj: $it")
+            return
+        }
+        editText.setText(text)
+    }
+
+    private fun handleSendImage(intent: Intent) {
+        (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let {
+            Log.i("NewPostActivity", "handleSendImage uri: ${intent.data}")
+            // Update UI to reflect image being shared
+        }
+    }
+
+    private fun handleSendMultipleImages(intent: Intent) {
+        intent.getParcelableArrayListExtra<Parcelable>(Intent.EXTRA_STREAM)?.let {
+            // Update UI to reflect multiple images being shared
         }
     }
 
