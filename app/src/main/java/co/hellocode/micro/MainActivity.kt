@@ -10,7 +10,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import co.hellocode.micro.newpost.NewPostActivity
-import co.hellocode.micro.tablayout.TabAdapter
+import co.hellocode.micro.tabs.TabAdapter
 import co.hellocode.micro.utils.NEW_POST_REQUEST_CODE
 import co.hellocode.micro.utils.PREFS_FILENAME
 import co.hellocode.micro.utils.TOKEN

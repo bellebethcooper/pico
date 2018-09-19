@@ -1,4 +1,4 @@
-package co.hellocode.micro.tablayout.fragments
+package co.hellocode.micro.tabs.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.hellocode.micro.*
+import co.hellocode.micro.models.Post
+import co.hellocode.micro.tabs.recyclers.BaseRecyclerAdapter
+import co.hellocode.micro.tabs.viewholders.PostViewHolder
 import co.hellocode.micro.utils.PREFS_FILENAME
 import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError

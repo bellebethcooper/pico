@@ -1,14 +1,13 @@
-package co.hellocode.micro
+package co.hellocode.micro.conversation
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import co.hellocode.micro.R
+import co.hellocode.micro.models.Post
 import co.hellocode.micro.utils.PREFS_FILENAME
 import co.hellocode.micro.utils.TOKEN
 import com.android.volley.AuthFailureError
@@ -18,11 +17,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.activity_new_post.*
-import kotlinx.android.synthetic.main.baselayout_timeline.*
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.math.log
 
 class ConversationActivity() : BaseTimelineActivity() {
     override var url = "https://micro.blog/posts/conversation?id="

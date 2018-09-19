@@ -29,9 +29,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".ConversationActivity"
+            android:name=".conversation.ConversationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileActivity"
+        <activity android:name=".profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
