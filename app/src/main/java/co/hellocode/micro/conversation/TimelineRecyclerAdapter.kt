@@ -13,6 +13,7 @@ import co.hellocode.micro.profile.ProfileActivity
 import co.hellocode.micro.R
 import co.hellocode.micro.models.Post
 import co.hellocode.micro.newpost.NewPostActivity
+import co.hellocode.micro.tabs.viewholders.PostViewHolder
 import co.hellocode.micro.utils.inflate
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -20,138 +21,16 @@ import kotlinx.android.synthetic.main.layout_post_image.view.*
 import kotlinx.android.synthetic.main.timeline_item.view.*
 
 
-open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<TimelineRecyclerAdapter.PostHolder>() {
+open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private val canShowConversations: Boolean = true) : RecyclerView.Adapter<PostViewHolder>() {
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PostHolder {
-        val inflatedView = p0.inflate(R.layout.timeline_item, false)
-        return PostHolder(inflatedView, canShowConversations)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PostViewHolder {
+        return PostViewHolder(p0, canShowConversations)
     }
 
     override fun getItemCount() = posts.size
 
-    override fun onBindViewHolder(p0: PostHolder, p1: Int) {
+    override fun onBindViewHolder(p0: PostViewHolder, p1: Int) {
         val itemPost = posts[p1]
-        p0.bindPost(itemPost)
-    }
-
-    class PostHolder(v: View, private var canShowConversations: Boolean) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
-        private var post: Post? = null
-
-        init {
-            if (this.canShowConversations) {
-                v.setOnClickListener(this)
-            }
-            v.setOnLongClickListener {
-                if (post == null) {
-                    return@setOnLongClickListener false
-                }
-                newPostIntent(it)
-                true
-            }
-            v.itemText.setOnLongClickListener {
-                if (post == null) {
-                    return@setOnLongClickListener false
-                }
-                newPostIntent(it)
-                true
-            }
-            v.avatar.setOnClickListener {
-                avatarClick(it)
-            }
-        }
-
-        private fun avatarClick(view: View) {
-            if (this.post?.username == null) {
-                return
-            }
-            val intent = Intent(view.context, ProfileActivity::class.java)
-            intent.putExtra("username", this.post?.username)
-            view.context.startActivity(intent)
-        }
-
-        override fun onClick(v: View) {
-            if (this.canShowConversations) {
-                postDetailIntent(v)
-            }
-        }
-
-        private fun newPostIntent(view: View) {
-            val intent = Intent(view.context, NewPostActivity::class.java)
-            intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
-            intent.putExtra("@string/reply_intent_extra_author", this.post?.username)
-            if (this.post?.mentions != null) {
-                intent.putStringArrayListExtra("@string/reply_intent_extra_mentions", this.post?.mentions)
-            }
-            view.context.startActivity(intent)
-        }
-
-        private fun postDetailIntent(view: View) {
-            val intent = Intent(view.context, ConversationActivity::class.java)
-            intent.putExtra("@string/reply_intent_extra_postID", this.post?.ID)
-            intent.putExtra("@string/reply_intent_extra_author", this.post?.username)
-            if (this.post?.mentions != null) {
-                intent.putStringArrayListExtra("@string/reply_intent_extra_mentions", this.post?.mentions)
-            }
-            view.context.startActivity(intent)
-        }
-
-        fun bindPost(post: Post) {
-            val images: ArrayList<ImageView> = ArrayList()
-
-            // remove any image views leftover from reusing views
-            for (i in 0 until view.post_layout.childCount) {
-                val v = view.post_layout.getChildAt(i)
-                if (v is ImageView) {
-                    images.add(v)
-                    //view.post_layout.removeViewAt(i)
-                }
-            }
-
-            for (img in images){
-                view.post_layout.removeView(img)
-            }
-            // and remove user avatar image
-            view.avatar.setImageDrawable(null)
-
-            view.itemText.setOnClickListener { v ->
-                if (this.canShowConversations) {
-                    postDetailIntent(v)
-                }
-            }
-
-            this.post = post
-            view.itemText.text = post.getParsedContent(view.context)
-            view.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
-            view.author.text = post.authorName
-            view.username.text = "@${post.username}"
-            if (!post.isConversation) {
-                view.conversationButton.visibility = View.GONE
-            } else {
-                view.conversationButton.visibility = View.VISIBLE
-            }
-
-            view.timestamp.text = DateUtils.getRelativeTimeSpanString(view.context, post.date.time)
-
-            val picasso = Picasso.get()
-//            picasso.setIndicatorsEnabled(true) // Uncomment this line to see coloured corners on images, indicating where they're loading from
-            // Red = network, blue = disk, green = memory
-            picasso.load(post.authorAvatarURL).transform(CropCircleTransformation()).into(view.avatar)
-
-            Log.i("TimelineRecyclerAdapter", "image count: ${post.imageSources.size}")
-            for (i in post.imageSources) {
-                val imageView = LayoutInflater.from(view.context).inflate(
-                        R.layout.layout_post_image,
-                        null,
-                        false
-                )
-                view.post_layout.addView(imageView)
-                picasso.load(i).into(imageView.post_image)
-            }
-        }
-
-        companion object {
-            private val POST_KEY = "POST"
-        }
+        p0.bindItem(itemPost)
     }
 }

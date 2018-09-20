@@ -22,11 +22,9 @@ import kotlinx.android.synthetic.main.timeline_item.view.*
 class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolean)
     : BaseViewHolder<Post>(parent, R.layout.timeline_item) {
 
-    //private var view: View = parent.inflate(R.layout.timeline_item, false)
     private var post: Post? = null
 
     init {
-        Log.i("PostViewHolder", "init")
         if (this.canShowConversations) {
             rootView.setOnClickListener {
                 postDetailIntent(it)
@@ -84,7 +82,6 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
     }
 
     override fun bindItem(item: Post) {
-        Log.i("PostViewHolder", "bindItem")
         this.post = item
         // remove any image views leftover from reusing views
         for (i in 0 until rootView.post_layout.childCount) {
@@ -102,7 +99,6 @@ class PostViewHolder(parent: ViewGroup, private var canShowConversations: Boolea
             }
         }
 
-        Log.i("PostViewHolder", "${item.content}, ${item.authorName}")
         rootView.itemText.text = item.getParsedContent(rootView.context)
         rootView.itemText.movementMethod = LinkMovementMethod.getInstance() // make links open in browser when tapped
         rootView.author.text = item.authorName
