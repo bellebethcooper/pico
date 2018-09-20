@@ -17,6 +17,7 @@ import kotlin.collections.ArrayList
 
 class Post(val item: JSONObject) {
     val ID: Int
+    val url: String
     val content: String
     val html: Spanned
     val authorName: String
@@ -29,6 +30,7 @@ class Post(val item: JSONObject) {
 
     init {
         this.ID = (item["id"] as String).toInt()
+        this.url = item["url"] as String
         val text = item["content_html"] as String
         content = text.trim()
         this.html = Html.fromHtml(content)
