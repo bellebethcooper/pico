@@ -97,7 +97,7 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
         }
 
         fun bindPost(post: Post) {
-            var images: ArrayList<ImageView> = ArrayList()
+            val images: ArrayList<ImageView> = ArrayList()
 
             // remove any image views leftover from reusing views
             for (i in 0 until view.post_layout.childCount) {
@@ -114,11 +114,11 @@ open class TimelineRecyclerAdapter(private val posts: ArrayList<Post>, private v
             // and remove user avatar image
             view.avatar.setImageDrawable(null)
 
-            view.itemText.setOnClickListener(View.OnClickListener { v ->
+            view.itemText.setOnClickListener { v ->
                 if (this.canShowConversations) {
                     postDetailIntent(v)
                 }
-            })
+            }
 
             this.post = post
             view.itemText.text = post.getParsedContent(view.context)
