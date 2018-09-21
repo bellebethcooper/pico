@@ -137,7 +137,7 @@ class NewPostActivity : AppCompatActivity() {
         (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let {
             val image = imageFrom(it)
             val loadingImg = LoadingImagePreview(this, it)
-            buttons_layout.addView(loadingImg.view, 0)
+            image_previews_layout.addView(loadingImg.view, 0)
             postImage(image, loadingImg)
         }
     }
@@ -149,7 +149,7 @@ class NewPostActivity : AppCompatActivity() {
             for (uri in uris) {
                 val image = imageFrom(uri)
                 val loadingImg = LoadingImagePreview(this, uri)
-                buttons_layout.addView(loadingImg.view, 0)
+                image_previews_layout.addView(loadingImg.view, 0)
                 postImage(image, loadingImg)
                 imagesLoaded += 1
                 if (imagesLoaded > 3) {

@@ -20,6 +20,8 @@ class LoadingImagePreview(context: Context, image: Uri) {
     init {
         this.view.addView(imgView)
         this.imgView.imageAlpha = 160
+        val p = imgView.layoutParams as ViewGroup.MarginLayoutParams
+        p.setMargins(10, 10, 10, 10)
         this.view.addView(this.spinner, 70, 70)
         val params = RelativeLayout.LayoutParams(70, 70)
         params.addRule(RelativeLayout.CENTER_IN_PARENT)
