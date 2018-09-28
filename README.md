@@ -1,3 +1,9 @@
+## Update: Sep 29, 2018
+
+This project is no longer maintained. I decided to [leave Micro.blog](http://blog.bellebcooper.com/leaving-microblog.html) and will not be working on Pico anymore. Since the code is open source, please feel free to fork it and maintain your own version.
+
+Thanks to everyone who used Pico and supported the project. It's one of the most fun projects I've worked on.
+
 # Pico: A Micro.blog client for Android
 
 This project is still very early! I threw it together just so I'd have a way to post to Micro.blog from my Android phone. It's evolving into a more fully fledged client, but it still has a long way to go.
@@ -16,5 +22,4 @@ Feel free to fork it or submit PRs, or just to try it out yourself.
 ## Get involved
 
 - Chat to me on Micro.blog about Pico! I'm [@belle](http://micro.blog/belle)
-- Visit our [public roadmap](https://changemap.co/hellocode/pico/) to see what's planned, what's in-progress, and to suggest and vote for features you'd like to see in Pico
 - Take a look at the issues here on GitHub to contribute to the source
